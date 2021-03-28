@@ -16,6 +16,12 @@
     <Filter Include="Header Files\glad">
       <UniqueIdentifier>{7f74e344-49e8-49ff-8bff-5744659bf244}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\maths">
+      <UniqueIdentifier>{3307f879-344d-4e6c-9674-14633046a337}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Maths">
+      <UniqueIdentifier>{81656569-b545-43df-bd45-7b4673ba7f70}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -27,6 +33,15 @@
     <ClInclude Include="khrplatform.h">
       <Filter>Header Files\glad</Filter>
     </ClInclude>
+    <ClInclude Include="Vector3.h">
+      <Filter>Header Files\maths</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>Header Files\maths</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector4.h">
+      <Filter>Header Files\maths</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -34,6 +49,9 @@
     </ClCompile>
     <ClCompile Include="WinMain.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3.cpp">
+      <Filter>Source Files\Maths</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

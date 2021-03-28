@@ -7,6 +7,8 @@
 #include "Application.h"
 #include <string>
 
+#include "Vector3.h"
+
 int WINAPI WinMain(HINSTANCE, HINSTANCE, PSTR, int);
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
