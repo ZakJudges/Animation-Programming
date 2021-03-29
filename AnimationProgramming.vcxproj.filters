@@ -48,6 +48,9 @@
     <ClInclude Include="Quaternion.h">
       <Filter>Header Files\maths</Filter>
     </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Header Files\maths</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -63,6 +66,9 @@
       <Filter>Source Files\Maths</Filter>
     </ClCompile>
     <ClCompile Include="Quaternion.cpp">
+      <Filter>Source Files\Maths</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
       <Filter>Source Files\Maths</Filter>
     </ClCompile>
   </ItemGroup>

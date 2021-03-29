@@ -156,7 +156,7 @@ Quaternion Normalised(const Quaternion& q)
 {
     float lenSq = q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w;
     if (lenSq < EPSILON_QUATERNION) {
-        return;
+        return Quaternion();
     }
     float invLength = 1.0f / sqrtf(lenSq);
 
