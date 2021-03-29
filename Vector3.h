@@ -29,7 +29,7 @@ float Dot(const Vector3& left, const Vector3& right);
 float LengthSq(const Vector3& vector);
 float Length(const Vector3& vector);
 void Normalise(Vector3& vector);
-Vector3 Normalised(Vector3& vector);
+Vector3 Normalised(const Vector3& vector);
 float Angle(const Vector3& left, const Vector3& right);
 float AngleNormalised(const Vector3& left, const Vector3& right);
 Vector3 Project(const Vector3& a, const Vector3& b);

@@ -57,7 +57,7 @@ void Normalise(Vector3& vector)
     vector.z *= lengthInverse;
 }
 
-Vector3 Normalised(Vector3& vector)
+Vector3 Normalised(const Vector3& vector)
 {
     float lengthSq = LengthSq(vector);
     if (lengthSq < VECTOR_EPSILON)
