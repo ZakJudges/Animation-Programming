@@ -105,10 +105,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
 	wglDeleteContext(tempRC);
 	wglMakeCurrent(hdc, hglrc);
 
-	if (!gladLoadGL()) {
+	if (!gladLoadGL()) 
+	{
 		std::cout << "Could not initialize GLAD\n";
 	}
-	else {
+	else 
+	{
 		std::cout << "OpenGL Version " << GLVersion.major << "." << GLVersion.minor << " loaded\n";
 	}
 
@@ -121,15 +123,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
 		PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT = (PFNWGLSWAPINTERVALEXTPROC)wglGetProcAddress("wglSwapIntervalEXT");
 		PFNWGLGETSWAPINTERVALEXTPROC wglGetSwapIntervalEXT = (PFNWGLGETSWAPINTERVALEXTPROC)wglGetProcAddress("wglGetSwapIntervalEXT");
 
-		if (wglSwapIntervalEXT(1)) {
+		if (wglSwapIntervalEXT(1)) 
+		{
 			std::cout << "Enabled vsynch\n";
 			vsynch = wglGetSwapIntervalEXT();
 		}
-		else {
+		else 
+		{
 			std::cout << "Could not enable vsynch\n";
 		}
 	}
-	else { // !swapControlSupported
+	else 
+	{ // !swapControlSupported
 		std::cout << "WGL_EXT_swap_control not supported\n";
 	}
 
@@ -167,7 +172,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
 			glPointSize(5.0f);
 			glBindVertexArray(gVertexArrayObject);
 
-			glClearColor(0.5f, 0.6f, 0.7f, 1.0f);
+			glClearColor(0.2f, 0.2f, 0.9f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 			float aspect = (float)clientWidth / (float)clientHeight;
@@ -230,3 +235,4 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam) {
 
 	return DefWindowProc(hwnd, iMsg, wParam, lParam);
 }
+
