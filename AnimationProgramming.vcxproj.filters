@@ -78,6 +78,9 @@
     <ClInclude Include="stb_image.h">
       <Filter>Header Files\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files\OpenGL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -114,6 +117,9 @@
       <Filter>Source Files\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="stb_image.cpp">
+      <Filter>Source Files\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
       <Filter>Source Files\OpenGL</Filter>
     </ClCompile>
   </ItemGroup>

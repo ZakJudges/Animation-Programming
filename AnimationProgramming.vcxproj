@@ -150,6 +150,7 @@
     <ClInclude Include="Quaternion.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="stb_image.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Uniform.h" />
     <ClInclude Include="Vector2.h" />
@@ -165,6 +166,7 @@
     <ClCompile Include="Quaternion.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="stb_image.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Uniform.cpp" />
     <ClCompile Include="Vector3.cpp" />
