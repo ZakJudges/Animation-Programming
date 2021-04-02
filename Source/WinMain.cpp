@@ -4,10 +4,12 @@
 #include "glad.h"
 #include <windows.h>
 #include <iostream>
-#include "Application.h"
+
 #include <string>
 
 #include "Vector3.h"
+#include "Application.h"
+#include "AnimationApp.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, PSTR, int);
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -39,7 +41,7 @@ GLuint gVertexArrayObject = 0;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow)
 {
-	gApplication = new Application();
+	gApplication = new AnimationApp();
 
 	WNDCLASSEX wndclass;
 	wndclass.cbSize = sizeof(WNDCLASSEX);

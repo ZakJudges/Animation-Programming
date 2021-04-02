@@ -26,6 +26,7 @@ void Shader::Load(const std::string& vertex, const std::string& fragment)
 	std::ifstream f(vertex.c_str());
 	bool vertFile = f.good();
 	f.close();
+
 	f = std::ifstream(fragment.c_str()); //std::ifstream f(vertex.c_str());
 	bool fragFile = f.good();
 	f.close();
@@ -35,6 +36,7 @@ void Shader::Load(const std::string& vertex, const std::string& fragment)
 	{
 		vertexSource = ReadFile(vertex);
 	}
+	
 	std::string fragmentSource = fragment;
 	if (fragFile)
 	{
@@ -148,7 +150,7 @@ unsigned int Shader::CompileFragmentShader(const std::string& fragment)
 		char infoLog[512];
 		glGetShaderInfoLog(fragmentShader, sizeof(infoLog), NULL, infoLog);
 
-		std::cout << "Vertex Shader compilation failed. \n";
+		std::cout << "Fragment Shader compilation failed. \n";
 		std::cout << "\t" << infoLog << "\n";
 		glDeleteShader(fragmentShader);
 		return 0;
