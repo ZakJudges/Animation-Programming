@@ -141,7 +141,9 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Attribute.h" />
+    <ClInclude Include="Draw.h" />
     <ClInclude Include="glad.h" />
+    <ClInclude Include="IndexBuffer.h" />
     <ClInclude Include="khrplatform.h" />
     <ClInclude Include="Maths.h" />
     <ClInclude Include="Matrix44.h" />
@@ -155,7 +157,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Attribute.cpp" />
+    <ClCompile Include="Draw.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="IndexBuffer.cpp" />
     <ClCompile Include="Matrix44.cpp" />
     <ClCompile Include="Quaternion.cpp" />
     <ClCompile Include="Shader.cpp" />
