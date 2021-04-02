@@ -3,6 +3,7 @@
 
 #include <vector>
 
+//	Varies per vertex.
 template<typename T>
 class Attribute
 {
