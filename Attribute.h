@@ -19,7 +19,7 @@ public:
 	
 private:
 	Attribute(const Attribute& other);
-	Attribute& operator=(const Attribute& other) {}
+	Attribute& operator=(const Attribute& other);
 	void SetAttribPointer(unsigned int slot);
 protected:
 	unsigned int m_handle;

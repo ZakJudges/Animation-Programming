@@ -15,7 +15,7 @@ private:
 	//	Uninstantiable.
 	Uniform();
 	Uniform(const Uniform&);
-	Uniform& operator=(const Uniform&) {}
+	Uniform& operator=(const Uniform&);
 	~Uniform() {}
 };
 
