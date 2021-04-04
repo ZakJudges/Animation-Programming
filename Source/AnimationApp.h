@@ -8,6 +8,8 @@
 #include "IndexBuffer.h"
 #include "Texture.h" 
 
+#define DEG2RAD 0.0174533f
+
 class AnimationApp : public Application
 {
 public:
@@ -25,5 +27,7 @@ private:
 	Attribute<Vector2F>* m_vertexTexCoords;
 	IndexBuffer* m_indexBuffer;
 	Texture* m_texture;
+	float m_planeRotation;
+	float m_rotationIncrement;
 };
 #endif

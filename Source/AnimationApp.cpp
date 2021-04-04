@@ -1,9 +1,12 @@
 #include "AnimationApp.h"
 #include "Uniform.h"
 #include "Draw.h"
+#include "glad.h"
 
 AnimationApp::AnimationApp()
 {
+	m_planeRotation = 0.0f;
+	m_rotationIncrement = 30.0f;
 }
 
 AnimationApp::~AnimationApp()
@@ -50,13 +53,23 @@ void AnimationApp::Init()
 
 void AnimationApp::Update(float deltaTime)
 {
+	
+	if (m_planeRotation > 60.0f || m_planeRotation < -60.0f)
+	{
+		m_rotationIncrement *= -1.0f;
+	}
+
+	m_planeRotation += m_rotationIncrement * deltaTime;
 }
 
 void AnimationApp::Render(float aspectRatio)
 {
+	glClearColor(0.6f, 0.6f, 0.6f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
 	Matrix44 projection = Perspective(60.0f, aspectRatio, 0.01f, 1000.0f);
 	Matrix44 view = LookAt(Vector3(0, 0, -5), Vector3(0, 0, 0), Vector3(0, 1, 0));
-	Matrix44 model;
+	Matrix44 model = QuaternionToMatrix44(AngleAxis(DEG2RAD * m_planeRotation, Vector3(0, 1, 0)));
 
 	m_shader->Bind();
 

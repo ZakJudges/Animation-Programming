@@ -19,9 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GLTFLoader.h" />
     <ClInclude Include="Source\AnimationApp.h" />
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\Attribute.h" />
+    <ClInclude Include="Source\cgltf.h" />
     <ClInclude Include="Source\Draw.h" />
     <ClInclude Include="Source\glad.h" />
     <ClInclude Include="Source\IndexBuffer.h" />
@@ -39,8 +41,10 @@
     <ClInclude Include="Source\Vector4.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GLTFLoader.cpp" />
     <ClCompile Include="Source\AnimationApp.cpp" />
     <ClCompile Include="Source\Attribute.cpp" />
+    <ClCompile Include="Source\cgltf.c" />
     <ClCompile Include="Source\Draw.cpp" />
     <ClCompile Include="Source\glad.c" />
     <ClCompile Include="Source\IndexBuffer.cpp" />
