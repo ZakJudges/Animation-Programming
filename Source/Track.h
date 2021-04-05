@@ -7,6 +7,9 @@
 #include "Vector3.h"
 #include "Quaternion.h"
 
+//	Represents animation data for the transform component per bone.
+//	i.e. positions over time for one bone, rotations over time, or scale over time.
+//		Must have at least two frames of data to be valid.
 template<typename T, unsigned int N>
 class Track
 {

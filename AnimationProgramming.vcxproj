@@ -43,6 +43,7 @@
     <ClInclude Include="Source\Vector2.h" />
     <ClInclude Include="Source\Vector3.h" />
     <ClInclude Include="Source\Vector4.h" />
+    <ClInclude Include="TransformTrack.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\AnimationApp.cpp" />
@@ -63,6 +64,7 @@
     <ClCompile Include="Source\Uniform.cpp" />
     <ClCompile Include="Source\Vector3.cpp" />
     <ClCompile Include="Source\WinMain.cpp" />
+    <ClCompile Include="TransformTrack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Shaders\lit.frag" />
