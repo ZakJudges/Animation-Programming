@@ -1,8 +1,8 @@
 #ifndef _H_TRANSFORM_TRACK
 #define _H_TRANSFORM_TRACK
 
-#include "Source/Track.h"
-#include "Source/Transform.h"
+#include "Track.h"
+#include "Transform.h"
 
 class TransformTrack
 {
@@ -17,6 +17,7 @@ public:
 	float GetEndTime();
 	bool IsValid();		
 	Transform Sample(const Transform& ref, float time, bool isLooping);
+
 protected:
 	unsigned int m_bone;
 	VectorTrack m_position;

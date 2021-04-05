@@ -4,13 +4,12 @@
 #include <vector>
 #include "Frame.h"
 #include "Interpolation.h"
-#include "Vector3.h"
-#include "Quaternion.h"
+#include "Maths.h"
 
 //	Represents animation data for the transform component per bone.
 //	i.e. positions over time for one bone, rotations over time, or scale over time.
 //		Must have at least two frames of data to be valid.
-template<typename T, unsigned int N>
+template<typename T, int N>
 class Track
 {
 public:
@@ -34,6 +33,8 @@ protected:
 protected:
 	std::vector<Frame<N>> m_frames;
 	Interpolation m_interpolationType;
+
+
 };
 
 typedef Track<float, 1> ScalarTrack;

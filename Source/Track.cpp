@@ -1,50 +1,55 @@
 #include "Track.h"
 #include "TrackUtils.h"
 
-template<typename T, unsigned int N>
+
+template Track<float, 1>;
+template Track<Vector3, 3>;
+template Track<Quaternion, 4>;
+
+template<typename T, int N>
 Track<T, N>::Track()
 {
 	//	Linear interpolation by default.
 	m_interpolationType = Interpolation::LINEAR;
 }
 
-template<typename T, unsigned int N>
+template<typename T, int N>
 void Track<T, N>::Resize(unsigned int size)
 {
 	m_frames.resize(size);
 }
 
-template<typename T, unsigned int N>
+template<typename T, int N>
 unsigned int Track<T, N>::GetSize()
 {
 	return m_frames.size();
 }
 
-template<typename T, unsigned int N>
+template<typename T, int N>
 Interpolation Track<T, N>::GetInterpolationType()
 {
 	return m_interpolationType;
 }
 
-template<typename T, unsigned int N>
+template<typename T, int N>
 void Track<T, N>::SetInterpolationType(Interpolation interpolationType)
 {
 	m_interpolationType = interpolationType;
 }
 
-template<typename T, unsigned int N>
+template<typename T, int N>
 float Track<T, N>::GetStartTime()
 {
 	return m_frames[0].m_time;
 }
 
-template<typename T, unsigned int N>
+template<typename T, int N>
 float Track<T, N>::GetEndTime()
 {
 	return m_frames[m_frames.size() - 1].m_time;
 }
 
-template<typename T, unsigned int N>
+template<typename T, int N>
 T Track<T, N>::Sample(float time, bool isLooping)
 {
 	if (m_interpolationType == Interpolation::CUBIC)
@@ -59,13 +64,13 @@ T Track<T, N>::Sample(float time, bool isLooping)
 	return SampleLinear(time, isLooping);
 }
 
-template<typename T, unsigned int N>
+template<typename T, int N>
 Frame<N>& Track<T, N>::operator[](unsigned int index)
 {
 	return m_frames[index];
 }
 
-template<typename T, unsigned int N>
+template<typename T, int N>
 T Track<T, N>::SampleConstant(float time, bool isLooping)
 {
 	int frame = GetFrameIndex(time, isLooping);
@@ -78,7 +83,7 @@ T Track<T, N>::SampleConstant(float time, bool isLooping)
 	return Cast(&m_frames[frame].m_value[0]);
 }
 
-template<typename T, unsigned int N>
+template<typename T, int N>
 T Track<T, N>::SampleLinear(float time, bool isLooping)
 {
 	int thisFrame = GetFrameIndex(time, isLooping);
@@ -110,7 +115,7 @@ T Track<T, N>::SampleLinear(float time, bool isLooping)
 
 }
 
-template<typename T, unsigned int N>
+template<typename T, int N>
 T Track<T, N>::SampleCubic(float time, bool isLooping)
 {
 	int thisFrame = GetFrameIndex(time, isLooping);
@@ -149,7 +154,7 @@ T Track<T, N>::SampleCubic(float time, bool isLooping)
 	return EvaluateHermite(t, point1, slope1, point2, slope2);
 }
 
-template<typename T, unsigned int N>
+template<typename T, int N>
 T Track<T, N>::EvaluateHermite(float t, const T& point1, const T& slope1, const T& point2, const T& slope2)
 {
 	float tt = t * t;
@@ -168,7 +173,7 @@ T Track<T, N>::EvaluateHermite(float t, const T& point1, const T& slope1, const 
 }
 
 //	Return the frame to the nearest time (frame will be to the left of time).
-template<typename T, unsigned int N>
+template<typename T, int N>
 int Track<T, N>::GetFrameIndex(float time, bool isLooping)
 {
 	unsigned int size = m_frames.size();
@@ -219,7 +224,7 @@ int Track<T, N>::GetFrameIndex(float time, bool isLooping)
 	return -1;
 }
 
-template<typename T, unsigned int N>
+template<typename T, int N>
 float Track<T, N>::FitTimeToTrack(float time, bool isLooping)
 {
 	unsigned int size = (unsigned int)m_frames.size();

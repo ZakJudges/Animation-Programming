@@ -2,7 +2,8 @@
 #define _H_FRAME_
 
 template<unsigned int N>
-class Frame {
+class Frame 
+{
 public:
 	float m_value[N];
 	float m_in[N];

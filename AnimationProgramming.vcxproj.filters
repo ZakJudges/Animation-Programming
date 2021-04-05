@@ -111,7 +111,7 @@
     <ClInclude Include="Source\Frame.h">
       <Filter>Header Files\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="TransformTrack.h">
+    <ClInclude Include="Source\TransformTrack.h">
       <Filter>Header Files\Animation</Filter>
     </ClInclude>
   </ItemGroup>
@@ -170,7 +170,7 @@
     <ClCompile Include="Source\TrackUtils.cpp">
       <Filter>Source Files\Animation</Filter>
     </ClCompile>
-    <ClCompile Include="TransformTrack.cpp">
+    <ClCompile Include="Source\TransformTrack.cpp">
       <Filter>Source Files\Animation</Filter>
     </ClCompile>
   </ItemGroup>

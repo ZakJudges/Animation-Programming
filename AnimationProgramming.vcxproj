@@ -39,11 +39,11 @@
     <ClInclude Include="Source\Track.h" />
     <ClInclude Include="Source\TrackUtils.h" />
     <ClInclude Include="Source\Transform.h" />
+    <ClInclude Include="Source\TransformTrack.h" />
     <ClInclude Include="Source\Uniform.h" />
     <ClInclude Include="Source\Vector2.h" />
     <ClInclude Include="Source\Vector3.h" />
     <ClInclude Include="Source\Vector4.h" />
-    <ClInclude Include="TransformTrack.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\AnimationApp.cpp" />
@@ -61,10 +61,10 @@
     <ClCompile Include="Source\Track.cpp" />
     <ClCompile Include="Source\TrackUtils.cpp" />
     <ClCompile Include="Source\Transform.cpp" />
+    <ClCompile Include="Source\TransformTrack.cpp" />
     <ClCompile Include="Source\Uniform.cpp" />
     <ClCompile Include="Source\Vector3.cpp" />
     <ClCompile Include="Source\WinMain.cpp" />
-    <ClCompile Include="TransformTrack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Shaders\lit.frag" />
