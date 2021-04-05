@@ -24,7 +24,7 @@ protected:
 	T SampleConstant(float time, bool isLooping);
 	T SampleLinear(float time, bool isLooping);
 	T SampleCubic(float time, bool isLooping);
-	T EvaluateHermite(float time, const T& point1, const T& slope1, const T& point2, const T& slope2);
+	T EvaluateHermite(float t, const T& point1, const T& slope1, const T& point2, const T& slope2);
 	int GetFrameIndex(float time, bool isLooping);
 	float FitTimeToTrack(float time, bool isLooping);
 	T Cast(float* values);
