@@ -9,9 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Header Files\maths">
-      <UniqueIdentifier>{3307f879-344d-4e6c-9674-14633046a337}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Maths">
       <UniqueIdentifier>{81656569-b545-43df-bd45-7b4673ba7f70}</UniqueIdentifier>
     </Filter>
@@ -30,6 +27,15 @@
     </Filter>
     <Filter Include="Source Files\Application">
       <UniqueIdentifier>{8fdf4a10-7ac4-4a82-ac40-893f2b340533}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Animation">
+      <UniqueIdentifier>{6c5f805b-efae-4d03-b660-1663932fb20d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Maths">
+      <UniqueIdentifier>{3307f879-344d-4e6c-9674-14633046a337}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Animation">
+      <UniqueIdentifier>{cc49535c-a54f-40c5-89bd-5362dc12a891}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -58,25 +64,25 @@
       <Filter>Header Files\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="Source\Maths.h">
-      <Filter>Header Files\maths</Filter>
+      <Filter>Header Files\Maths</Filter>
     </ClInclude>
     <ClInclude Include="Source\Matrix44.h">
-      <Filter>Header Files\maths</Filter>
+      <Filter>Header Files\Maths</Filter>
     </ClInclude>
     <ClInclude Include="Source\Quaternion.h">
-      <Filter>Header Files\maths</Filter>
+      <Filter>Header Files\Maths</Filter>
     </ClInclude>
     <ClInclude Include="Source\Transform.h">
-      <Filter>Header Files\maths</Filter>
+      <Filter>Header Files\Maths</Filter>
     </ClInclude>
     <ClInclude Include="Source\Vector2.h">
-      <Filter>Header Files\maths</Filter>
+      <Filter>Header Files\Maths</Filter>
     </ClInclude>
     <ClInclude Include="Source\Vector4.h">
-      <Filter>Header Files\maths</Filter>
+      <Filter>Header Files\Maths</Filter>
     </ClInclude>
     <ClInclude Include="Source\Vector3.h">
-      <Filter>Header Files\maths</Filter>
+      <Filter>Header Files\Maths</Filter>
     </ClInclude>
     <ClInclude Include="Source\glad.h">
       <Filter>Header Files\OpenGL</Filter>
@@ -90,8 +96,20 @@
     <ClInclude Include="Source\cgltf.h">
       <Filter>Header Files\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="GLTFLoader.h">
+    <ClInclude Include="Source\GLTFLoader.h">
       <Filter>Header Files\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Interpolation.h">
+      <Filter>Header Files\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Track.h">
+      <Filter>Header Files\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TrackUtils.h">
+      <Filter>Header Files\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Frame.h">
+      <Filter>Header Files\Animation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -140,8 +158,14 @@
     <ClCompile Include="Source\cgltf.c">
       <Filter>Source Files\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="GLTFLoader.cpp">
+    <ClCompile Include="Source\GLTFLoader.cpp">
       <Filter>Source Files\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Track.cpp">
+      <Filter>Source Files\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TrackUtils.cpp">
+      <Filter>Source Files\Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

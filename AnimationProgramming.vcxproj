@@ -19,14 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GLTFLoader.h" />
     <ClInclude Include="Source\AnimationApp.h" />
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\Attribute.h" />
     <ClInclude Include="Source\cgltf.h" />
     <ClInclude Include="Source\Draw.h" />
+    <ClInclude Include="Source\Frame.h" />
     <ClInclude Include="Source\glad.h" />
+    <ClInclude Include="Source\GLTFLoader.h" />
     <ClInclude Include="Source\IndexBuffer.h" />
+    <ClInclude Include="Source\Interpolation.h" />
     <ClInclude Include="Source\khrplatform.h" />
     <ClInclude Include="Source\Maths.h" />
     <ClInclude Include="Source\Matrix44.h" />
@@ -34,6 +36,8 @@
     <ClInclude Include="Source\Shader.h" />
     <ClInclude Include="Source\stb_image.h" />
     <ClInclude Include="Source\Texture.h" />
+    <ClInclude Include="Source\Track.h" />
+    <ClInclude Include="Source\TrackUtils.h" />
     <ClInclude Include="Source\Transform.h" />
     <ClInclude Include="Source\Uniform.h" />
     <ClInclude Include="Source\Vector2.h" />
@@ -41,18 +45,20 @@
     <ClInclude Include="Source\Vector4.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GLTFLoader.cpp" />
     <ClCompile Include="Source\AnimationApp.cpp" />
     <ClCompile Include="Source\Attribute.cpp" />
     <ClCompile Include="Source\cgltf.c" />
     <ClCompile Include="Source\Draw.cpp" />
     <ClCompile Include="Source\glad.c" />
+    <ClCompile Include="Source\GLTFLoader.cpp" />
     <ClCompile Include="Source\IndexBuffer.cpp" />
     <ClCompile Include="Source\Matrix44.cpp" />
     <ClCompile Include="Source\Quaternion.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\stb_image.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
+    <ClCompile Include="Source\Track.cpp" />
+    <ClCompile Include="Source\TrackUtils.cpp" />
     <ClCompile Include="Source\Transform.cpp" />
     <ClCompile Include="Source\Uniform.cpp" />
     <ClCompile Include="Source\Vector3.cpp" />
