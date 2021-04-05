@@ -23,6 +23,7 @@
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\Attribute.h" />
     <ClInclude Include="Source\cgltf.h" />
+    <ClInclude Include="Source\DebugDraw.h" />
     <ClInclude Include="Source\Draw.h" />
     <ClInclude Include="Source\Frame.h" />
     <ClInclude Include="Source\glad.h" />
@@ -49,6 +50,7 @@
     <ClCompile Include="Source\AnimationApp.cpp" />
     <ClCompile Include="Source\Attribute.cpp" />
     <ClCompile Include="Source\cgltf.c" />
+    <ClCompile Include="Source\DebugDraw.cpp" />
     <ClCompile Include="Source\Draw.cpp" />
     <ClCompile Include="Source\glad.c" />
     <ClCompile Include="Source\GLTFLoader.cpp" />

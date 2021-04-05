@@ -67,7 +67,8 @@ void AnimationApp::Render(float aspectRatio)
 	glClearColor(0.6f, 0.6f, 0.6f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
-	Matrix44 projection = Perspective(60.0f, aspectRatio, 0.01f, 1000.0f);
+	//Matrix44 projection = Perspective(60.0f, aspectRatio, 0.01f, 1000.0f);
+	Matrix44 projection = Ortho(-aspectRatio * 11.0f, aspectRatio * 11.0f, -11, 11, 0.001f, 10);
 	Matrix44 view = LookAt(Vector3(0, 0, -5), Vector3(0, 0, 0), Vector3(0, 1, 0));
 	Matrix44 model = QuaternionToMatrix44(AngleAxis(DEG2RAD * m_planeRotation, Vector3(0, 1, 0)));
 

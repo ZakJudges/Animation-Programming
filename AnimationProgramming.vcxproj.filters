@@ -114,6 +114,9 @@
     <ClInclude Include="Source\TransformTrack.h">
       <Filter>Header Files\Animation</Filter>
     </ClInclude>
+    <ClInclude Include="Source\DebugDraw.h">
+      <Filter>Header Files\OpenGL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Attribute.cpp">
@@ -172,6 +175,9 @@
     </ClCompile>
     <ClCompile Include="Source\TransformTrack.cpp">
       <Filter>Source Files\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DebugDraw.cpp">
+      <Filter>Source Files\OpenGL</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
