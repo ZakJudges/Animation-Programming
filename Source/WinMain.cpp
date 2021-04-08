@@ -10,6 +10,7 @@
 #include "Vector3.h"
 #include "Application.h"
 #include "AnimationApp.h"
+#include "SkeletonApp.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, PSTR, int);
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -41,7 +42,8 @@ GLuint gVertexArrayObject = 0;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow)
 {
-	gApplication = new AnimationApp();
+	//gApplication = new AnimationApp();
+	gApplication = new SkeletonApp();
 
 	WNDCLASSEX wndclass;
 	wndclass.cbSize = sizeof(WNDCLASSEX);

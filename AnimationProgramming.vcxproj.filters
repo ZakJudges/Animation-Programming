@@ -114,14 +114,17 @@
     <ClInclude Include="Source\TransformTrack.h">
       <Filter>Header Files\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="Source\DebugDraw.h">
-      <Filter>Header Files\OpenGL</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Pose.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Clip.h">
       <Filter>Header Files\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DebugLines.h">
+      <Filter>Header Files\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SkeletonApp.h">
+      <Filter>Header Files\Application</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -182,14 +185,17 @@
     <ClCompile Include="Source\TransformTrack.cpp">
       <Filter>Source Files\Animation</Filter>
     </ClCompile>
-    <ClCompile Include="Source\DebugDraw.cpp">
-      <Filter>Source Files\OpenGL</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Pose.cpp">
       <Filter>Source Files\Animation</Filter>
     </ClCompile>
     <ClCompile Include="Source\Clip.cpp">
       <Filter>Source Files\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DebugLines.cpp">
+      <Filter>Source Files\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SkeletonApp.cpp">
+      <Filter>Source Files\Application</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -143,7 +143,7 @@ float Clip::FitTimeToClip(float time)
         {
             time += m_endTime - m_startTime;
         }
-        time += time + m_startTime;
+        time = time + m_startTime;
     }
     else
     {

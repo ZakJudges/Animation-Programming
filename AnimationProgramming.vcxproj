@@ -24,7 +24,7 @@
     <ClInclude Include="Source\Attribute.h" />
     <ClInclude Include="Source\cgltf.h" />
     <ClInclude Include="Source\Clip.h" />
-    <ClInclude Include="Source\DebugDraw.h" />
+    <ClInclude Include="Source\DebugLines.h" />
     <ClInclude Include="Source\Draw.h" />
     <ClInclude Include="Source\Frame.h" />
     <ClInclude Include="Source\glad.h" />
@@ -37,6 +37,7 @@
     <ClInclude Include="Source\Pose.h" />
     <ClInclude Include="Source\Quaternion.h" />
     <ClInclude Include="Source\Shader.h" />
+    <ClInclude Include="Source\SkeletonApp.h" />
     <ClInclude Include="Source\stb_image.h" />
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\Track.h" />
@@ -53,7 +54,7 @@
     <ClCompile Include="Source\Attribute.cpp" />
     <ClCompile Include="Source\cgltf.c" />
     <ClCompile Include="Source\Clip.cpp" />
-    <ClCompile Include="Source\DebugDraw.cpp" />
+    <ClCompile Include="Source\DebugLines.cpp" />
     <ClCompile Include="Source\Draw.cpp" />
     <ClCompile Include="Source\glad.c" />
     <ClCompile Include="Source\GLTFLoader.cpp" />
@@ -62,6 +63,7 @@
     <ClCompile Include="Source\Pose.cpp" />
     <ClCompile Include="Source\Quaternion.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
+    <ClCompile Include="Source\SkeletonApp.cpp" />
     <ClCompile Include="Source\stb_image.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\Track.cpp" />

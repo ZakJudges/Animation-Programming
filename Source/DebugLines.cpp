@@ -1,19 +1,20 @@
-#include "DebugDraw.h"
+#include "DebugLines.h"
 #include "Uniform.h"
 #include "Draw.h"
 
-DebugDraw::DebugDraw() {
+DebugDraw::DebugDraw() 
+{
 	mAttribs = new Attribute<Vector3>();
 
 	mShader = new Shader(
-		"#version 330 core\n"
+		"#version 460 core\n"
 		"uniform mat4 mvp;\n"
 		"in vec3 position;\n"
 		"void main() {\n"
 		"	gl_Position = mvp * vec4(position, 1.0);\n"
 		"}"
 		,
-		"#version 330 core\n"
+		"#version 460 core\n"
 		"uniform vec3 color;\n"
 		"out vec4 FragColor;\n"
 		"void main() {\n"
@@ -26,14 +27,14 @@ DebugDraw::DebugDraw(unsigned int size) {
 	mAttribs = new Attribute<Vector3>();
 
 	mShader = new Shader(
-		"#version 330 core\n"
+		"#version 460 core\n"
 		"uniform mat4 mvp;\n"
 		"in vec3 position;\n"
 		"void main() {\n"
 		"	gl_Position = mvp * vec4(position, 1.0);\n"
 		"}"
 		,
-		"#version 330 core\n"
+		"#version 460 core\n"
 		"uniform vec3 color;\n"
 		"out vec4 FragColor;\n"
 		"void main() {\n"
@@ -44,30 +45,61 @@ DebugDraw::DebugDraw(unsigned int size) {
 	Resize(size);
 }
 
-DebugDraw::~DebugDraw() {
+DebugDraw::~DebugDraw() 
+{
 	delete mAttribs;
 	delete mShader;
 }
 
-unsigned int DebugDraw::Size() {
+unsigned int DebugDraw::Size() 
+{
 	return (unsigned int)mPoints.size();
 }
 
-void DebugDraw::Resize(unsigned int newSize) {
+void DebugDraw::Resize(unsigned int newSize) 
+{
 	mPoints.resize(newSize);
 }
 
-Vector3& DebugDraw::operator[](unsigned int index) {
+Vector3& DebugDraw::operator[](unsigned int index) 
+{
 	return mPoints[index];
 }
 
-void DebugDraw::Push(const Vector3& v) {
+void DebugDraw::Push(const Vector3& v) 
+{
 	mPoints.push_back(v);
 }
 
 
-void DebugDraw::UpdateOpenGLBuffers() {
+void DebugDraw::UpdateOpenGLBuffers() 
+{
 	mAttribs->Set(mPoints);
+}
+
+void DebugDraw::FromPose(Pose& pose) 
+{
+	unsigned int requiredVerts = 0;
+	unsigned int numJoints = pose.GetSize();
+	for (unsigned int i = 0; i < numJoints; ++i) 
+	{
+		if (pose.GetParent(i) < 0) {
+			continue;
+		}
+
+		requiredVerts += 2;
+	}
+
+	mPoints.resize(requiredVerts);
+	for (unsigned int i = 0; i < numJoints; ++i) 
+	{
+		if (pose.GetParent(i) < 0) {
+			continue;
+		}
+
+		mPoints.push_back(pose.GetGlobalTransform(i).position);
+		mPoints.push_back(pose.GetGlobalTransform(pose.GetParent(i)).position);
+	}
 }
 
 void DebugDraw::Draw(DebugDrawMode mode, const Vector3& color, const Matrix44& mvp) {
@@ -75,16 +107,20 @@ void DebugDraw::Draw(DebugDrawMode mode, const Vector3& color, const Matrix44& m
 	Uniform<Matrix44>::Set(mShader->GetUniform("mvp"), mvp);
 	Uniform<Vector3>::Set(mShader->GetUniform("color"), color);
 	mAttribs->BindTo(mShader->GetAttribute("position"));
-	if (mode == DebugDrawMode::Lines) {
+	if (mode == DebugDrawMode::Lines) 
+	{
 		::Draw(Size(), DrawMode::Lines);
 	}
-	else if (mode == DebugDrawMode::Loop) {
+	else if (mode == DebugDrawMode::Loop)
+	{
 		::Draw(Size(), DrawMode::LineLoop);
 	}
-	else if (mode == DebugDrawMode::Strip) {
+	else if (mode == DebugDrawMode::Strip) 
+	{
 		::Draw(Size(), DrawMode::LineStrip);
 	}
-	else {
+	else 
+	{
 		::Draw(Size(), DrawMode::Points);
 	}
 	mAttribs->UnbindFrom(mShader->GetAttribute("position"));
