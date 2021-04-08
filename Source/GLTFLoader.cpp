@@ -187,6 +187,70 @@ Pose LoadRestPose(cgltf_data* data)
     return result;
 }
 
+//  glTF files do not store the bind pose, only the inverse bind pose, so we must reconstruct it.
+Pose LoadBindPose(cgltf_data* data)
+{
+    Pose restPose = LoadRestPose(data);
+    unsigned int numBones = restPose.GetSize();
+    std::vector<Transform> worldBindPose(numBones);
+
+    for (int i = 0; i < numBones; ++i)
+    {
+        worldBindPose[i] = restPose.GetGlobalTransform(i);
+    }
+
+    //  Loop through all of the skinned meshes and calculate the bind pose for each.
+    unsigned int numSkins = data->skins_count;
+    for (int i = 0; i < numSkins; ++i)
+    {
+        //  Read the inverse bind matrices into a vector of float values.
+        //      The vector will contain numBones * 16 float values.
+        cgltf_skin* skin = &(data->skins[i]);
+        std::vector<float> invBindAccessor;
+        GLTFHelper::GetScalarValues(invBindAccessor, 16, *skin->inverse_bind_matrices);
+        
+        
+        unsigned int numJoints = skin->joints_count;
+        for (int j = 0; j < numJoints; ++j)
+        {
+            //  Read the inverse bind matrix of the joint.
+            float* matrix = &(invBindAccessor[j * 16]);
+            Matrix44 invBindMatrix = Matrix44(matrix);
+
+            //  Invert to get the bind matrix.
+            Matrix44 bindMatrix = Inverse(invBindMatrix);
+            Transform bindTransform = Matrix44ToTransform(bindMatrix);
+
+            cgltf_node* jointNode = skin->joints[j];
+            int jointIndex = GLTFHelper::GetNodeIndex(jointNode, data->nodes, numBones);
+            worldBindPose[jointIndex] = bindTransform;
+        }
+    }
+
+    //  Convert each joint so that it is relative to its parent.
+    Pose bindPose = restPose;
+    for (int i = 0; i < numBones; ++i)
+    {
+        Transform current = worldBindPose[i];
+        int p = bindPose.GetParent(i);
+        if (p >= 0)
+        {
+            //  Make joint transform relative to its parent, unless it is a root.
+            Transform parent = worldBindPose[p];
+            current = Combine(Inverse(parent), current);
+        }
+        bindPose.SetLocalTransform(i, current);
+    }
+
+    return bindPose;
+
+}
+
+Skeleton LoadSkeleton(cgltf_data* data)
+{
+    return Skeleton(LoadRestPose(data), LoadBindPose(data), LoadJointNames(data));
+}
+
 std::vector<std::string> LoadJointNames(cgltf_data* data)
 {
     //  Assuming one animated character per glTF file.
@@ -253,5 +317,7 @@ std::vector<Clip> LoadAnimationClips(cgltf_data* data)
 
     return result;
 }
+
+
 
 

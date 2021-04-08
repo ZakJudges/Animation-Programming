@@ -14,8 +14,7 @@ void Skeleton::Set(const Pose& rest, const Pose& bind, const std::vector<std::st
     m_restPose = rest;
     m_bindPose = bind;
     m_jointNames = names;
-    UpdateInverseBindPose();
-
+    UpdateInverseBindPose();    
 }
 
 Pose& Skeleton::GetRestPose()

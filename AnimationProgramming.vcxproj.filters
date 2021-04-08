@@ -37,6 +37,12 @@
     <Filter Include="Source Files\Animation">
       <UniqueIdentifier>{cc49535c-a54f-40c5-89bd-5362dc12a891}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\AssetLoading">
+      <UniqueIdentifier>{696fbe3d-7c2e-4385-b147-133e7a2ad21d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\AssetLoading">
+      <UniqueIdentifier>{0b46c6cd-7a62-43ab-8144-c5f8781a6cca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Attribute.h">
@@ -52,9 +58,6 @@
       <Filter>Header Files\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="Source\Shader.h">
-      <Filter>Header Files\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\stb_image.h">
       <Filter>Header Files\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="Source\Texture.h">
@@ -93,12 +96,6 @@
     <ClInclude Include="Source\AnimationApp.h">
       <Filter>Header Files\Application</Filter>
     </ClInclude>
-    <ClInclude Include="Source\cgltf.h">
-      <Filter>Header Files\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GLTFLoader.h">
-      <Filter>Header Files\OpenGL</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Interpolation.h">
       <Filter>Header Files\Animation</Filter>
     </ClInclude>
@@ -114,9 +111,6 @@
     <ClInclude Include="Source\TransformTrack.h">
       <Filter>Header Files\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Pose.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Clip.h">
       <Filter>Header Files\Animation</Filter>
     </ClInclude>
@@ -127,6 +121,18 @@
       <Filter>Header Files\Application</Filter>
     </ClInclude>
     <ClInclude Include="Source\Skeleton.h">
+      <Filter>Header Files\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\cgltf.h">
+      <Filter>Header Files\AssetLoading</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GLTFLoader.h">
+      <Filter>Header Files\AssetLoading</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\stb_image.h">
+      <Filter>Header Files\AssetLoading</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Pose.h">
       <Filter>Header Files\Animation</Filter>
     </ClInclude>
   </ItemGroup>
@@ -144,9 +150,6 @@
       <Filter>Source Files\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="Source\Shader.cpp">
-      <Filter>Source Files\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\stb_image.cpp">
       <Filter>Source Files\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="Source\Texture.cpp">
@@ -173,12 +176,6 @@
     <ClCompile Include="Source\AnimationApp.cpp">
       <Filter>Source Files\Application</Filter>
     </ClCompile>
-    <ClCompile Include="Source\cgltf.c">
-      <Filter>Source Files\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GLTFLoader.cpp">
-      <Filter>Source Files\OpenGL</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Track.cpp">
       <Filter>Source Files\Animation</Filter>
     </ClCompile>
@@ -202,6 +199,15 @@
     </ClCompile>
     <ClCompile Include="Source\Skeleton.cpp">
       <Filter>Source Files\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\stb_image.cpp">
+      <Filter>Source Files\AssetLoading</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\cgltf.c">
+      <Filter>Source Files\AssetLoading</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GLTFLoader.cpp">
+      <Filter>Source Files\AssetLoading</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
