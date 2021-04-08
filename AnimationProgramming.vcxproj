@@ -39,6 +39,7 @@
     <ClInclude Include="Source\Shader.h" />
     <ClInclude Include="Source\Skeleton.h" />
     <ClInclude Include="Source\SkeletonApp.h" />
+    <ClInclude Include="Source\SkinnedMesh.h" />
     <ClInclude Include="Source\stb_image.h" />
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\Track.h" />
@@ -66,6 +67,7 @@
     <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\Skeleton.cpp" />
     <ClCompile Include="Source\SkeletonApp.cpp" />
+    <ClCompile Include="Source\SkinnedMesh.cpp" />
     <ClCompile Include="Source\stb_image.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\Track.cpp" />

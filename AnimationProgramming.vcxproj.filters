@@ -135,6 +135,9 @@
     <ClInclude Include="Source\Pose.h">
       <Filter>Header Files\Animation</Filter>
     </ClInclude>
+    <ClInclude Include="Source\SkinnedMesh.h">
+      <Filter>Header Files\OpenGL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Attribute.cpp">
@@ -208,6 +211,9 @@
     </ClCompile>
     <ClCompile Include="Source\GLTFLoader.cpp">
       <Filter>Source Files\AssetLoading</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SkinnedMesh.cpp">
+      <Filter>Source Files\OpenGL</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

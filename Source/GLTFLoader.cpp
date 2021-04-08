@@ -209,7 +209,6 @@ Pose LoadBindPose(cgltf_data* data)
         std::vector<float> invBindAccessor;
         GLTFHelper::GetScalarValues(invBindAccessor, 16, *skin->inverse_bind_matrices);
         
-        
         unsigned int numJoints = skin->joints_count;
         for (int j = 0; j < numJoints; ++j)
         {
