@@ -37,6 +37,7 @@
     <ClInclude Include="Source\Pose.h" />
     <ClInclude Include="Source\Quaternion.h" />
     <ClInclude Include="Source\Shader.h" />
+    <ClInclude Include="Source\Skeleton.h" />
     <ClInclude Include="Source\SkeletonApp.h" />
     <ClInclude Include="Source\stb_image.h" />
     <ClInclude Include="Source\Texture.h" />
@@ -63,6 +64,7 @@
     <ClCompile Include="Source\Pose.cpp" />
     <ClCompile Include="Source\Quaternion.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
+    <ClCompile Include="Source\Skeleton.cpp" />
     <ClCompile Include="Source\SkeletonApp.cpp" />
     <ClCompile Include="Source\stb_image.cpp" />
     <ClCompile Include="Source\Texture.cpp" />

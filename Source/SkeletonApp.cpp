@@ -32,8 +32,8 @@ void SkeletonApp::Init()
 
 void SkeletonApp::Update(float deltaTime)
 {
-	
-	m_playbackTime = m_clips[m_currentClip].Sample(m_currentPose, m_playbackTime + deltaTime);
+	m_playbackTime += deltaTime * 0.2f;
+	m_playbackTime = m_clips[m_currentClip].Sample(m_currentPose, m_playbackTime);
 	m_currentPoseVis->FromPose(m_currentPose);
 }
 
