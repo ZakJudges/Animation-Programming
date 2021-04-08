@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -33,6 +33,7 @@
     <ClInclude Include="Source\khrplatform.h" />
     <ClInclude Include="Source\Maths.h" />
     <ClInclude Include="Source\Matrix44.h" />
+    <ClInclude Include="Source\Pose.h" />
     <ClInclude Include="Source\Quaternion.h" />
     <ClInclude Include="Source\Shader.h" />
     <ClInclude Include="Source\stb_image.h" />
@@ -56,6 +57,7 @@
     <ClCompile Include="Source\GLTFLoader.cpp" />
     <ClCompile Include="Source\IndexBuffer.cpp" />
     <ClCompile Include="Source\Matrix44.cpp" />
+    <ClCompile Include="Source\Pose.cpp" />
     <ClCompile Include="Source\Quaternion.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\stb_image.cpp" />
