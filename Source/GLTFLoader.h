@@ -7,6 +7,7 @@
 #include "Clip.h"
 #include "Pose.h"
 #include "Skeleton.h"
+#include "SkinnedMesh.h"
 
 //	Assuming that each glTF file contains only one animated character.
 
@@ -17,6 +18,7 @@ Skeleton LoadSkeleton(cgltf_data* data);
 void FreeGLTFFile(cgltf_data* data);
 std::vector<std::string> LoadJointNames(cgltf_data* data);
 std::vector<Clip> LoadAnimationClips(cgltf_data* data);
+std::vector<SkinnedMesh> LoadSkinnedMeshes(cgltf_data* data);
 
 
 

@@ -5,6 +5,7 @@
 #include "Pose.h"
 #include "Track.h"
 #include "Interpolation.h"
+#include <algorithm>
 
 namespace GLTFHelper
 {
@@ -120,7 +121,86 @@ namespace GLTFHelper
         }
     }
 
+    void MeshFromAttribute(SkinnedMesh& output, cgltf_attribute& attribute, cgltf_skin* skin, cgltf_node* nodes, unsigned int nodeCount)
+    {
+        cgltf_attribute_type attribType = attribute.type;
+        cgltf_accessor& accessor = *attribute.data;
+        unsigned int componentCount = 0;
+
+        //  Check if we will be parsing 2,3 or 4 floating point values per vertex.
+        if (accessor.type = cgltf_type_vec2)
+        {
+            componentCount = 2;
+        }
+        if (accessor.type = cgltf_type_vec3)
+        {
+            componentCount = 3;
+        }
+        if (accessor.type = cgltf_type_vec4)
+        {
+            componentCount = 4;
+        }
+
+        std::vector<float> values;
+        GetScalarValues(values, componentCount, accessor);
+        unsigned int accessorCount = accessor.count;
+        std::vector<Vector3>& positions = output.GetPositions();
+        std::vector<Vector3>& normals = output.GetNormals();
+        std::vector<Vector2F>& texCoords = output.GetTexCoords();
+        std::vector<Vector4I>& influences = output.GetInfluences();
+        std::vector<Vector4F>& weights = output.GetWeights();
+
+        //  Loop through all the values in the current accessor and assign them to the appropriate vector based on the accessor type.
+        for (unsigned int i = 0; i < accessorCount; ++i)
+        {
+            int index = i * componentCount;
+            switch (attribType)
+            {
+                case cgltf_attribute_type_position:
+                    positions.push_back(Vector3(values[index + 0], values[index + 1], values[index + 2]));
+                    break;
+
+                case cgltf_attribute_type_texcoord:
+                    texCoords.push_back(Vector2F(values[index + 0], values[index + 1]));
+                    break;
+
+                case cgltf_attribute_type_weights:
+                    weights.push_back(Vector4F(values[index + 0], values[index + 1], values[index + 2], values[index + 3]));
+                    break;
+
+                case cgltf_attribute_type_normal:
+                    Vector3 normal = Vector3(values[index + 0], values[index + 1], values[index + 2]);
+                    if (LengthSq(normal) < 0.000001f)
+                    {
+                        std::cout << "Invalid mesh normal from cgltf_attribute\n";
+                        normal = Vector3(0, 1, 0);
+                    }
+                    normals.push_back(Normalised(normal));
+                    break;
+
+                case cgltf_attribute_type_joints:
+                    //  Values are stored as floating point numbers, so add 0.5 to remove precision issues.
+                    Vector4I joints((int)values[index + 0] + 0.5f, (int)values[index + 1] + 0.5f, (int)values[index + 2] + 0.5f
+                        , (int)values[index + 3] + 0.5f);
+                    //  Joints are stored relative to the joints array. 
+                    //      But we need them relative to the skeleton hierarchy.
+                    joints.x = GetNodeIndex(skin->joints[joints.x], nodes, nodeCount);
+                    joints.y = GetNodeIndex(skin->joints[joints.y], nodes, nodeCount);
+                    joints.z = GetNodeIndex(skin->joints[joints.z], nodes, nodeCount);
+                    joints.w = GetNodeIndex(skin->joints[joints.w], nodes, nodeCount);
+
+                    //  Ensure that invalid node indices have a value of 0;
+                    joints.x = std::max(0, joints.x);
+                    joints.y = std::max(0, joints.y);
+                    joints.z = std::max(0, joints.z);
+                    joints.w = std::max(0, joints.w);
+
+                    break;   
+            }
+        }
+    }
 }
+
 
 
 cgltf_data* LoadGLTFFile(const char* path)
@@ -317,6 +397,57 @@ std::vector<Clip> LoadAnimationClips(cgltf_data* data)
     return result;
 }
 
+//  Assuming one glTF file contains one model only.
+std::vector<SkinnedMesh> LoadSkinnedMeshes(cgltf_data* data)
+{
+    std::vector<SkinnedMesh> result;
+    cgltf_node* nodes = data->nodes;
+    unsigned int nodeCount = data->nodes_count;
+
+    //  Loop through all the nodes in the glTF file. Only process nodes that have both a mesh and a skin.
+    for (int i = 0; i < nodeCount; ++i)
+    {
+        cgltf_node* node = &nodes[i]; 
+        if (node->mesh == 0 || node->skin == 0)
+        {
+            continue;
+        }
+
+        //  In glTF, a mesh is made up of primitives. 
+        int primitiveCount = node->mesh->primitives_count;
+        for (int j = 0; j < primitiveCount; ++j)
+        {
+            result.push_back(SkinnedMesh());
+            SkinnedMesh& mesh = result[result.size() - 1];
+            cgltf_primitive* primitive = &node->mesh->primitives[j];
+
+            //  Each primitive contains attributes.
+            unsigned int attribCount = primitive->attributes_count;
+            for (int k = 0; k < attribCount; ++k)
+            {
+                cgltf_attribute* attribute = &primitive->attributes[k];
+                GLTFHelper::MeshFromAttribute(mesh, *attribute, node->skin, nodes, nodeCount);
+            }
+
+            //  Check if the primitive contains indices.
+            if (primitive->indices != 0)
+            {
+                int indexCount = primitive->indices->count;
+                std::vector<unsigned int>& indices = mesh.GetIndices();
+                indices.resize(indexCount);
+
+                for (int k = 0; k < indexCount; ++k)
+                {
+                    indices[k] = cgltf_accessor_read_index(primitive->indices, k);
+                }
+            }
+
+            mesh.UpdateOpenGLBuffers();
+        }
+    }
+
+    return result;
+}
 
 
 
