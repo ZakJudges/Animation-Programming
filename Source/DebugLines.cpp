@@ -124,5 +124,5 @@ void DebugDraw::Draw(DebugDrawMode mode, const Vector3& color, const Matrix44& m
 		::Draw(Size(), DrawMode::Points);
 	}
 	mAttribs->UnbindFrom(mShader->GetAttribute("position"));
-	mShader->Unbind();
+	mShader->UnBind();
 }

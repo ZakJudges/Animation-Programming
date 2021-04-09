@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\AnimatedMeshApp.h" />
     <ClInclude Include="Source\AnimationApp.h" />
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\Attribute.h" />
@@ -52,6 +53,7 @@
     <ClInclude Include="Source\Vector4.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\AnimatedMeshApp.cpp" />
     <ClCompile Include="Source\AnimationApp.cpp" />
     <ClCompile Include="Source\Attribute.cpp" />
     <ClCompile Include="Source\cgltf.c" />
@@ -80,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Shaders\lit.frag" />
+    <None Include="Source\Shaders\skinned.vert" />
     <None Include="Source\Shaders\static.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

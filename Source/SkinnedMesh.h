@@ -6,6 +6,7 @@
 #include "Attribute.h"
 #include "IndexBuffer.h"
 #include "Skeleton.h"
+#include "Pose.h"
 
 //	Temporary skinned mesh class.
 class SkinnedMesh

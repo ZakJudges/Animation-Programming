@@ -58,7 +58,7 @@ void Shader::Bind()
 	glUseProgram(m_handle);
 }
 
-void Shader::Unbind()
+void Shader::UnBind()
 {
 	glUseProgram(0);
 }

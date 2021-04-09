@@ -91,7 +91,7 @@ void AnimationApp::Render(float aspectRatio)
 	m_vertexNormals->UnbindFrom(m_shader->GetAttribute("normal"));
 	m_vertexTexCoords->UnbindFrom(m_shader->GetAttribute("texCoord"));
 
-	m_shader->Unbind();
+	m_shader->UnBind();
 
 }
 

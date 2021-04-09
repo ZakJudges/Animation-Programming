@@ -11,6 +11,7 @@
 #include "Application.h"
 #include "AnimationApp.h"
 #include "SkeletonApp.h"
+#include "AnimatedMeshApp.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, PSTR, int);
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -43,7 +44,8 @@ GLuint gVertexArrayObject = 0;
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow)
 {
 	//gApplication = new AnimationApp();
-	gApplication = new SkeletonApp();
+	//gApplication = new SkeletonApp();
+	gApplication = new AnimatedMeshApp();
 
 	WNDCLASSEX wndclass;
 	wndclass.cbSize = sizeof(WNDCLASSEX);

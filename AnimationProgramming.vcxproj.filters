@@ -138,6 +138,9 @@
     <ClInclude Include="Source\SkinnedMesh.h">
       <Filter>Header Files\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="Source\AnimatedMeshApp.h">
+      <Filter>Header Files\Application</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Attribute.cpp">
@@ -215,12 +218,18 @@
     <ClCompile Include="Source\SkinnedMesh.cpp">
       <Filter>Source Files\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="Source\AnimatedMeshApp.cpp">
+      <Filter>Source Files\Application</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Shaders\lit.frag">
       <Filter>Shaders</Filter>
     </None>
     <None Include="Source\Shaders\static.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Source\Shaders\skinned.vert">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

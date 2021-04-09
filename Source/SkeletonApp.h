@@ -6,6 +6,7 @@
 #include "DebugLines.h"
 #include "Pose.h"
 #include "Clip.h"
+#include "Skeleton.h"
 
 
 class SkeletonApp : public Application
@@ -19,12 +20,13 @@ public:
 	virtual void Shutdown() override;
 
 private:
-	Pose m_restPose;
+	Skeleton m_skeleton;
 	Pose m_currentPose;
 	std::vector<Clip> m_clips;
 	unsigned int m_currentClip;
 	float m_playbackTime;
 	DebugDraw* m_restPoseVis;
 	DebugDraw* m_currentPoseVis;
+	DebugDraw* m_bindPoseVis;
 };
 #endif

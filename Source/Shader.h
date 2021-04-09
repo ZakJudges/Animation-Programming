@@ -12,7 +12,7 @@ public:
 	~Shader();
 	void Load(const std::string& vertex, const std::string& fragment);
 	void Bind();
-	void Unbind();
+	void UnBind();
 	unsigned int GetAttribute(const std::string& name);
 	unsigned int GetUniform(const std::string& name);
 	unsigned int GetHandle();

@@ -1,5 +1,6 @@
 #include "SkinnedMesh.h"
 #include "Draw.h"
+#include "Transform.h"
 
 SkinnedMesh::SkinnedMesh()
 {
@@ -159,6 +160,9 @@ void SkinnedMesh::CPUSkinMatrix(Skeleton& skeleton, Pose& pose)
         m_skinnedPositions[i] = TransformPoint(skinMatrix, m_positions[i]);
         m_skinnedNormals[i] = TransformVector(skinMatrix, m_normals[i]);
     }
+
+    m_posAttrib->Set(m_skinnedPositions);
+    m_normAttrib->Set(m_skinnedNormals);
 }
 
 void SkinnedMesh::UpdateOpenGLBuffers()

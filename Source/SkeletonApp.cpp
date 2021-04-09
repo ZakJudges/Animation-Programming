@@ -14,16 +14,21 @@ SkeletonApp::~SkeletonApp()
 void SkeletonApp::Init()
 {
 	cgltf_data* gltf = LoadGLTFFile("Assets/Woman.gltf");
-	m_restPose = LoadRestPose(gltf);
+	m_skeleton = LoadSkeleton(gltf);
+	
 	m_clips = LoadAnimationClips(gltf);
 	FreeGLTFFile(gltf);
 
 	m_restPoseVis = new DebugDraw();
-	m_restPoseVis->FromPose(m_restPose);
+	m_restPoseVis->FromPose(m_skeleton.GetRestPose());
 	m_restPoseVis->UpdateOpenGLBuffers();
 
+	m_bindPoseVis = new DebugDraw();
+	m_bindPoseVis->FromPose(m_skeleton.GetBindPose());
+	m_bindPoseVis->UpdateOpenGLBuffers();
+
 	m_currentClip = 0;
-	m_currentPose = m_restPose;
+	m_currentPose = m_skeleton.GetRestPose();
 
 	m_currentPoseVis = new DebugDraw();
 	m_currentPoseVis->FromPose(m_currentPose);
@@ -32,7 +37,7 @@ void SkeletonApp::Init()
 
 void SkeletonApp::Update(float deltaTime)
 {
-	m_playbackTime += deltaTime * 0.2f;
+	m_playbackTime += deltaTime;
 	m_playbackTime = m_clips[m_currentClip].Sample(m_currentPose, m_playbackTime);
 	m_currentPoseVis->FromPose(m_currentPose);
 }
@@ -46,7 +51,8 @@ void SkeletonApp::Render(float aspectRatio)
 	Matrix44 view = LookAt(Vector3(0, 4, 7), Vector3(0, 4, 0), Vector3(0, 1, 0));
 	Matrix44 mvp = projection * view; // No model
 
-	//m_restPoseVis->Draw(DebugDrawMode::Lines, Vector3(1, 0, 0), mvp);
+	m_restPoseVis->Draw(DebugDrawMode::Lines, Vector3(1, 0, 0), mvp);
+	m_bindPoseVis->Draw(DebugDrawMode::Lines, Vector3(0, 1, 0), mvp);
 	m_currentPoseVis->UpdateOpenGLBuffers();
 	m_currentPoseVis->Draw(DebugDrawMode::Lines, Vector3(1, 1, 0), mvp);
 }

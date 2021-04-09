@@ -128,15 +128,15 @@ namespace GLTFHelper
         unsigned int componentCount = 0;
 
         //  Check if we will be parsing 2,3 or 4 floating point values per vertex.
-        if (accessor.type = cgltf_type_vec2)
+        if (accessor.type == cgltf_type_vec2)
         {
             componentCount = 2;
         }
-        if (accessor.type = cgltf_type_vec3)
+        if (accessor.type == cgltf_type_vec3)
         {
             componentCount = 3;
         }
-        if (accessor.type = cgltf_type_vec4)
+        if (accessor.type == cgltf_type_vec4)
         {
             componentCount = 4;
         }
@@ -157,18 +157,25 @@ namespace GLTFHelper
             switch (attribType)
             {
                 case cgltf_attribute_type_position:
+                
                     positions.push_back(Vector3(values[index + 0], values[index + 1], values[index + 2]));
-                    break;
+                
+                break;
 
                 case cgltf_attribute_type_texcoord:
+                
                     texCoords.push_back(Vector2F(values[index + 0], values[index + 1]));
-                    break;
+                
+                break;
 
                 case cgltf_attribute_type_weights:
+                
                     weights.push_back(Vector4F(values[index + 0], values[index + 1], values[index + 2], values[index + 3]));
-                    break;
+                
+                break;
 
                 case cgltf_attribute_type_normal:
+                {
                     Vector3 normal = Vector3(values[index + 0], values[index + 1], values[index + 2]);
                     if (LengthSq(normal) < 0.000001f)
                     {
@@ -176,9 +183,11 @@ namespace GLTFHelper
                         normal = Vector3(0, 1, 0);
                     }
                     normals.push_back(Normalised(normal));
-                    break;
+                }
+                break;
 
                 case cgltf_attribute_type_joints:
+                {
                     //  Values are stored as floating point numbers, so add 0.5 to remove precision issues.
                     Vector4I joints((int)values[index + 0] + 0.5f, (int)values[index + 1] + 0.5f, (int)values[index + 2] + 0.5f
                         , (int)values[index + 3] + 0.5f);
@@ -195,13 +204,13 @@ namespace GLTFHelper
                     joints.z = std::max(0, joints.z);
                     joints.w = std::max(0, joints.w);
 
-                    break;   
+                    influences.push_back(joints);
+                }
+                break;   
             }
         }
     }
 }
-
-
 
 cgltf_data* LoadGLTFFile(const char* path)
 {
@@ -414,8 +423,8 @@ std::vector<SkinnedMesh> LoadSkinnedMeshes(cgltf_data* data)
         }
 
         //  In glTF, a mesh is made up of primitives. 
-        int primitiveCount = node->mesh->primitives_count;
-        for (int j = 0; j < primitiveCount; ++j)
+        unsigned int primitiveCount = node->mesh->primitives_count;
+        for (unsigned int j = 0; j < primitiveCount; ++j)
         {
             result.push_back(SkinnedMesh());
             SkinnedMesh& mesh = result[result.size() - 1];
@@ -423,7 +432,7 @@ std::vector<SkinnedMesh> LoadSkinnedMeshes(cgltf_data* data)
 
             //  Each primitive contains attributes.
             unsigned int attribCount = primitive->attributes_count;
-            for (int k = 0; k < attribCount; ++k)
+            for (unsigned int k = 0; k < attribCount; ++k)
             {
                 cgltf_attribute* attribute = &primitive->attributes[k];
                 GLTFHelper::MeshFromAttribute(mesh, *attribute, node->skin, nodes, nodeCount);
@@ -436,7 +445,7 @@ std::vector<SkinnedMesh> LoadSkinnedMeshes(cgltf_data* data)
                 std::vector<unsigned int>& indices = mesh.GetIndices();
                 indices.resize(indexCount);
 
-                for (int k = 0; k < indexCount; ++k)
+                for (unsigned int k = 0; k < indexCount; ++k)
                 {
                     indices[k] = cgltf_accessor_read_index(primitive->indices, k);
                 }
@@ -448,6 +457,8 @@ std::vector<SkinnedMesh> LoadSkinnedMeshes(cgltf_data* data)
 
     return result;
 }
+
+
 
 
 
