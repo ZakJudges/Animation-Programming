@@ -1,4 +1,5 @@
 #include "Pose.h"
+#include "Timer.h"
 
 Pose::Pose()
 {
@@ -81,6 +82,7 @@ void Pose::SetLocalTransform(unsigned int index, const Transform& transform)
 //  Combine all the transforms until the root bone is reached.
 Transform Pose::GetGlobalTransform(unsigned int index)
 {
+    //PROFILE_FUNCTION();
     Transform result = m_joints[index];
 
     for (int i = m_parents[index]; i >= 0; i = m_parents[i])
@@ -101,6 +103,7 @@ Transform Pose::operator[](unsigned int index)
 //  TODO: Make more efficient (currently recalculating joints multiple times).
 void Pose::GetMatrixPalette(std::vector<Matrix44>& out)
 {
+  //  PROFILE_FUNCTION();
     unsigned int size = GetSize();
     if (out.size() != size)
     {

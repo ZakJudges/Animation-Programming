@@ -3,7 +3,7 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
-
+#include "Timer.h"
 
 Shader::Shader()
 {

@@ -1,4 +1,5 @@
 #include "TransformTrack.h"
+#include "Timer.h"
 
 
 TransformTrack::TransformTrack()
@@ -105,6 +106,8 @@ bool TransformTrack::IsValid()
 
 Transform TransformTrack::Sample(const Transform& ref, float time, bool isLooping)
 {
+   PROFILE_FUNCTION();
+
     Transform result = ref;
 
     if (m_position.GetSize() > 1)

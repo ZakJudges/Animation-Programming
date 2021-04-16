@@ -2,6 +2,7 @@
 #include "glad.h"
 #include "stb_image.h"
 #include <iostream>
+#include "Timer.h"
 
 Texture::Texture()
 {
@@ -14,6 +15,7 @@ Texture::Texture()
 Texture::Texture(const char* path)
 {
     glGenTextures(1, &m_handle);
+
     Load(path);
 }
 

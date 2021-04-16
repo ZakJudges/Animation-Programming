@@ -11,10 +11,14 @@ AnimatedMeshApp::AnimatedMeshApp()
 
 AnimatedMeshApp::~AnimatedMeshApp()
 {
+	Shutdown();
 }
 
 void AnimatedMeshApp::Init()
 {
+	Instrumentor::Get().BeginSession("Rendering", "AnimationUpdate.json");
+	
+
 	cgltf_data* gltf = LoadGLTFFile("Assets/Woman.gltf");
 	m_cpuMeshes = LoadSkinnedMeshes(gltf);
 	
@@ -27,10 +31,12 @@ void AnimatedMeshApp::Init()
 	{
 		m_gpuMeshes[i].UpdateOpenGLBuffers();
 	}
-
+	
 	m_staticShader = new Shader("Source/Shaders/static.vert", "Source/Shaders/lit.frag");
 	m_skinnedShader = new Shader("Source/Shaders/skinned.vert", "Source/Shaders/lit.frag");
 	m_diffuseTexture = new Texture("Assets/Woman.png");
+	
+	
 
 	m_gpuAnimInfo.m_animatedPose = m_skeleton.GetRestPose();
 	m_gpuAnimInfo.m_posePalette.resize(m_skeleton.GetRestPose().GetSize());
@@ -49,22 +55,21 @@ void AnimatedMeshApp::Init()
 			m_gpuAnimInfo.m_clip = i;
 		}
 	}
+
+	
+
+
 }
 
 void AnimatedMeshApp::Update(float deltaTime)
 {
-	
-	m_cpuAnimInfo.m_playback = m_clips[m_cpuAnimInfo.m_clip].Sample(m_cpuAnimInfo.m_animatedPose, m_cpuAnimInfo.m_playback + deltaTime);
+	PROFILE_FUNCTION();
+	//m_cpuAnimInfo.m_playback = m_clips[m_cpuAnimInfo.m_clip].Sample(m_cpuAnimInfo.m_animatedPose, m_cpuAnimInfo.m_playback + deltaTime);
+	m_gpuAnimInfo.m_playback = m_clips[m_gpuAnimInfo.m_clip].Sample(m_gpuAnimInfo.m_animatedPose, m_gpuAnimInfo.m_playback + deltaTime);
 
-	{
-		Timer timer("Sampling");
-		m_gpuAnimInfo.m_playback = m_clips[m_gpuAnimInfo.m_clip].Sample(m_gpuAnimInfo.m_animatedPose, m_gpuAnimInfo.m_playback + deltaTime);
-	}
-	
-
-	for (unsigned int i = 0, size = (unsigned int)m_cpuMeshes.size(); i < size; ++i) {
-		m_cpuMeshes[i].CPUSkinMatrix(m_skeleton, m_cpuAnimInfo.m_animatedPose);
-	}
+	//for (unsigned int i = 0, size = (unsigned int)m_cpuMeshes.size(); i < size; ++i) {
+	//	m_cpuMeshes[i].CPUSkinMatrix(m_skeleton, m_cpuAnimInfo.m_animatedPose);
+	//}
 
 	m_gpuAnimInfo.m_animatedPose.GetMatrixPalette(m_gpuAnimInfo.m_posePalette);
 
@@ -73,6 +78,9 @@ void AnimatedMeshApp::Update(float deltaTime)
 
 void AnimatedMeshApp::Render(float aspectRatio)
 {
+	//PROFILE_FUNCTION();
+
+	
 	glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
@@ -81,6 +89,8 @@ void AnimatedMeshApp::Render(float aspectRatio)
 	//Matrix44 mvp = projection * view; // No model
 	Matrix44 model;
 	
+	
+
 	// CPU Skinned Mesh
 	model = TransformToMatrix44(m_cpuAnimInfo.m_model);
 	m_staticShader->Bind();
@@ -122,5 +132,5 @@ void AnimatedMeshApp::Render(float aspectRatio)
 
 void AnimatedMeshApp::Shutdown()
 {
-	
+	Instrumentor::Get().EndSession();
 }

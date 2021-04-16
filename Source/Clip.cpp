@@ -1,5 +1,5 @@
 #include "Clip.h"
-
+#include "Timer.h"
 Clip::Clip()
 {
     m_name = "no_name_given";
@@ -25,6 +25,8 @@ unsigned int Clip::GetSize()
 
 float Clip::Sample(Pose& output, float time)
 {
+    PROFILE_FUNCTION();
+
     if (GetDuration() == 0.0f)
     {
         return 0.0f;
@@ -129,6 +131,7 @@ void Clip::SetLooping(bool isLooping)
 
 float Clip::FitTimeToClip(float time)
 {
+
     if (m_looping)
     {
         float duration = m_endTime - m_startTime;
