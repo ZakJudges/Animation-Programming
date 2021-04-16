@@ -43,6 +43,7 @@
     <ClInclude Include="Source\SkinnedMesh.h" />
     <ClInclude Include="Source\stb_image.h" />
     <ClInclude Include="Source\Texture.h" />
+    <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\Track.h" />
     <ClInclude Include="Source\TrackUtils.h" />
     <ClInclude Include="Source\Transform.h" />
@@ -72,6 +73,7 @@
     <ClCompile Include="Source\SkinnedMesh.cpp" />
     <ClCompile Include="Source\stb_image.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
+    <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\Track.cpp" />
     <ClCompile Include="Source\TrackUtils.cpp" />
     <ClCompile Include="Source\Transform.cpp" />

@@ -43,6 +43,12 @@
     <Filter Include="Source Files\AssetLoading">
       <UniqueIdentifier>{0b46c6cd-7a62-43ab-8144-c5f8781a6cca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Utils">
+      <UniqueIdentifier>{11be6673-5daa-4a20-bcc4-e5cef95ea6bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utils">
+      <UniqueIdentifier>{7ce10df7-036e-496b-ad06-af7deb5992b5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Attribute.h">
@@ -141,6 +147,9 @@
     <ClInclude Include="Source\AnimatedMeshApp.h">
       <Filter>Header Files\Application</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Timer.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Attribute.cpp">
@@ -220,6 +229,9 @@
     </ClCompile>
     <ClCompile Include="Source\AnimatedMeshApp.cpp">
       <Filter>Source Files\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Timer.cpp">
+      <Filter>Source Files\Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

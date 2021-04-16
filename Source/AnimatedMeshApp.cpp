@@ -3,7 +3,7 @@
 #include "GLTFLoader.h"
 #include "Uniform.h"
 #include "Attribute.h"
-
+#include "Timer.h"
 AnimatedMeshApp::AnimatedMeshApp()
 {
 
@@ -53,8 +53,14 @@ void AnimatedMeshApp::Init()
 
 void AnimatedMeshApp::Update(float deltaTime)
 {
+	
 	m_cpuAnimInfo.m_playback = m_clips[m_cpuAnimInfo.m_clip].Sample(m_cpuAnimInfo.m_animatedPose, m_cpuAnimInfo.m_playback + deltaTime);
-	m_gpuAnimInfo.m_playback = m_clips[m_gpuAnimInfo.m_clip].Sample(m_gpuAnimInfo.m_animatedPose, m_gpuAnimInfo.m_playback + deltaTime);
+
+	{
+		Timer timer("Sampling");
+		m_gpuAnimInfo.m_playback = m_clips[m_gpuAnimInfo.m_clip].Sample(m_gpuAnimInfo.m_animatedPose, m_gpuAnimInfo.m_playback + deltaTime);
+	}
+	
 
 	for (unsigned int i = 0, size = (unsigned int)m_cpuMeshes.size(); i < size; ++i) {
 		m_cpuMeshes[i].CPUSkinMatrix(m_skeleton, m_cpuAnimInfo.m_animatedPose);
