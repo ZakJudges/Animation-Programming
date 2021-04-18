@@ -40,27 +40,27 @@ protected:
 typedef Track<float, 1> ScalarTrack;
 typedef Track<Vector3, 3> VectorTrack;
 typedef Track<Quaternion, 4> QuaternionTrack;
-
-//	Fast track is sampled using a lookup table.
-//	Results in GetFrameIndex() having constant complexity, and is more suited to longer animation clips/higher frame count.
-template <typename T, int N>
-class FastTrack : public Track<T, N>
-{
-public:
-	FastTrack();
-	FastTrack(unsigned int sampleFrequency = 60);
-	void UpdateIndexLookupTable();
-	//FastTrack<T, N> OptimiseTrack(Track<T, N>& track);
-protected:
-	virtual int GetFrameIndex(float time, bool isLooping) override;
-protected:
-	std::vector<unsigned int> m_sampledFrames;
-	unsigned int m_sampleFrequency;
-};
-
-typedef FastTrack<float, 1> ScalarFastTrack;
-typedef FastTrack<Vector3, 3> VectorFastTrack;
-typedef FastTrack<Quaternion, 4> QuaternionFastTrack;
-
+//
+////	Fast track is sampled using a lookup table.
+////	Results in GetFrameIndex() having constant complexity, and is more suited to longer animation clips/higher frame count.
+//template <typename T, int N>
+//class FastTrack : public Track<T, N>
+//{
+//public:
+//	FastTrack();
+//	FastTrack(unsigned int sampleFrequency = 60);
+//	void UpdateIndexLookupTable();
+//	//FastTrack<T, N> OptimiseTrack(Track<T, N>& track);
+//protected:
+//	virtual int GetFrameIndex(float time, bool isLooping) override;
+//protected:
+//	std::vector<unsigned int> m_sampledFrames;
+//	unsigned int m_sampleFrequency;
+//};
+//
+//typedef FastTrack<float, 1> ScalarFastTrack;
+//typedef FastTrack<Vector3, 3> VectorFastTrack;
+//typedef FastTrack<Quaternion, 4> QuaternionFastTrack;
+//
 
 #endif
