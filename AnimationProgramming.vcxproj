@@ -36,7 +36,6 @@
     <ClInclude Include="Source\khrplatform.h" />
     <ClInclude Include="Source\Maths.h" />
     <ClInclude Include="Source\Matrix44.h" />
-    <ClInclude Include="Source\OptimisationApp.h" />
     <ClInclude Include="Source\Pose.h" />
     <ClInclude Include="Source\Quaternion.h" />
     <ClInclude Include="Source\Shader.h" />
@@ -68,7 +67,6 @@
     <ClCompile Include="Source\IndexBuffer.cpp" />
     <ClCompile Include="Source\Instrumentor.cpp" />
     <ClCompile Include="Source\Matrix44.cpp" />
-    <ClCompile Include="Source\OptimisationApp.cpp" />
     <ClCompile Include="Source\Pose.cpp" />
     <ClCompile Include="Source\Quaternion.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
@@ -88,7 +86,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Shaders\lit.frag" />
-    <None Include="Source\Shaders\preskinned.vert" />
     <None Include="Source\Shaders\skinned.vert" />
     <None Include="Source\Shaders\static.vert" />
   </ItemGroup>

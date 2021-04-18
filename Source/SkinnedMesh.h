@@ -22,9 +22,8 @@ public:
 	std::vector<Vector4F>& GetWeights();
 	std::vector<Vector4I>& GetInfluences();
 	std::vector<unsigned int>& GetIndices();
-	//void CPUSkinTransform(Skeleton& skeleton, Pose& pose);
+	void CPUSkinTransform(Skeleton& skeleton, Pose& pose);
 	void CPUSkinMatrix(Skeleton& skeleton, Pose& pose);
-	void CPUSkin(std::vector<Matrix44>& animatedPose);
 	void UpdateOpenGLBuffers();
 	void Bind(int position, int normal, int texCoord, int weight, int influence);
 	void Draw();
