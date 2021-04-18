@@ -1,27 +1,27 @@
-#include "AnimatedMeshApp.h"
+#include "OptimisationApp.h"
 #include "glad.h"
 #include "GLTFLoader.h"
 #include "Uniform.h"
 #include "Attribute.h"
 #include "Timer.h"
-AnimatedMeshApp::AnimatedMeshApp()
+OptimisationApp::OptimisationApp()
 {
 
 }
 
-AnimatedMeshApp::~AnimatedMeshApp()
+OptimisationApp::~OptimisationApp()
 {
 	Shutdown();
 }
 
-void AnimatedMeshApp::Init()
+void OptimisationApp::Init()
 {
-	Instrumentor::Get().BeginSession("Rendering", "AnimationUpdate.json");
-	
+	Instrumentor::Get().BeginSession("Rendering", "PreGenSkinGPU.json");
+
 
 	cgltf_data* gltf = LoadGLTFFile("Assets/Woman.gltf");
 	m_cpuMeshes = LoadSkinnedMeshes(gltf);
-	
+
 	m_skeleton = LoadSkeleton(gltf);
 	m_clips = LoadAnimationClips(gltf);
 	FreeGLTFFile(gltf);
@@ -31,12 +31,10 @@ void AnimatedMeshApp::Init()
 	{
 		m_gpuMeshes[i].UpdateOpenGLBuffers();
 	}
-	
+
 	m_staticShader = new Shader("Source/Shaders/static.vert", "Source/Shaders/lit.frag");
-	m_skinnedShader = new Shader("Source/Shaders/skinned.vert", "Source/Shaders/lit.frag");
+	m_skinnedShader = new Shader("Source/Shaders/preskinned.vert", "Source/Shaders/lit.frag");
 	m_diffuseTexture = new Texture("Assets/Woman.png");
-	
-	
 
 	m_gpuAnimInfo.m_animatedPose = m_skeleton.GetRestPose();
 	m_gpuAnimInfo.m_posePalette.resize(m_skeleton.GetRestPose().GetSize());
@@ -57,29 +55,48 @@ void AnimatedMeshApp::Init()
 	}
 }
 
-void AnimatedMeshApp::Update(float deltaTime)
+void OptimisationApp::Update(float deltaTime)
 {
 	PROFILE_FUNCTION();
-	//m_cpuAnimInfo.m_playback = m_clips[m_cpuAnimInfo.m_clip].Sample(m_cpuAnimInfo.m_animatedPose, m_cpuAnimInfo.m_playback + deltaTime);
-	{
-		Timer timer("Sampling");
-		m_gpuAnimInfo.m_playback = m_clips[m_gpuAnimInfo.m_clip].Sample(m_gpuAnimInfo.m_animatedPose, m_gpuAnimInfo.m_playback + deltaTime);
-	}
 
-	//for (unsigned int i = 0, size = (unsigned int)m_cpuMeshes.size(); i < size; ++i) {
-	//	m_cpuMeshes[i].CPUSkinMatrix(m_skeleton, m_cpuAnimInfo.m_animatedPose);
+	////	CPU SkinnedMesh:
+	////	Sample the clip to set the pose from the specified time.
+	//m_cpuAnimInfo.m_playback = m_clips[m_cpuAnimInfo.m_clip].Sample(m_cpuAnimInfo.m_animatedPose, m_cpuAnimInfo.m_playback + deltaTime);
+	////	Get the pose in the form of a matrix palette.
+	//m_cpuAnimInfo.m_animatedPose.GetMatrixPalette(m_cpuAnimInfo.m_posePalette);
+	////	Get the inverse bind pose.
+	std::vector<Matrix44>& invBindPose = m_skeleton.GetInvBindPose();
+	////	Combine the pose with the inverse bind pose to get the animated pose.
+	//for (int i = 0; i < m_cpuAnimInfo.m_posePalette.size(); ++i)
+	//{
+	//	m_cpuAnimInfo.m_posePalette[i] = m_cpuAnimInfo.m_posePalette[i] * invBindPose[i];
+	//}
+	////	Skin the mesh before sending to the static vertex shader.
+	//for (unsigned int i = 0, size = (unsigned int)m_cpuMeshes.size(); i < size; ++i) 
+	//{
+	//	//m_cpuMeshes[i].CPUSkinMatrix(m_skeleton, m_cpuAnimInfo.m_animatedPose);
+	//
+	//	//	Skin the mesh by sending it the combined pose and inverse bind pose.
+	//	m_cpuMeshes[i].CPUSkin(m_cpuAnimInfo.m_posePalette);
 	//}
 
+	//	GPU SkinnedMesh:
+	//	Sample the clip to set the pose at the specified time.
+	m_gpuAnimInfo.m_playback = m_clips[m_gpuAnimInfo.m_clip].Sample(m_gpuAnimInfo.m_animatedPose, m_gpuAnimInfo.m_playback + deltaTime);
+	//	Convert the pose into a palette of matrices, each matrix represents the global transform of a bone.
 	m_gpuAnimInfo.m_animatedPose.GetMatrixPalette(m_gpuAnimInfo.m_posePalette);
-
+	//	Multiply the animation pose with the inverse bind pose.
+	for (int i = 0; i < m_gpuAnimInfo.m_posePalette.size(); ++i)
+	{
+		m_gpuAnimInfo.m_posePalette[i] = m_gpuAnimInfo.m_posePalette[i] * invBindPose[i];
+	}
 
 }
 
-void AnimatedMeshApp::Render(float aspectRatio)
+void OptimisationApp::Render(float aspectRatio)
 {
-	//PROFILE_FUNCTION();
+	PROFILE_FUNCTION();
 
-	
 	glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
@@ -87,8 +104,7 @@ void AnimatedMeshApp::Render(float aspectRatio)
 	Matrix44 view = LookAt(Vector3(0, 5, 7), Vector3(0, 3, 0), Vector3(0, 1, 0));
 	//Matrix44 mvp = projection * view; // No model
 	Matrix44 model;
-	
-	
+
 
 	// CPU Skinned Mesh
 	model = TransformToMatrix44(m_cpuAnimInfo.m_model);
@@ -97,9 +113,9 @@ void AnimatedMeshApp::Render(float aspectRatio)
 	Uniform<Matrix44>::Set(m_staticShader->GetUniform("view"), view);
 	Uniform<Matrix44>::Set(m_staticShader->GetUniform("projection"), projection);
 	Uniform<Vector3>::Set(m_staticShader->GetUniform("light"), Vector3(1, 1, 1));
-	
+
 	m_diffuseTexture->Set(m_staticShader->GetUniform("tex0"), 0);
-	for (unsigned int i = 0, size = (unsigned int)m_cpuMeshes.size(); i < size; ++i) 
+	for (unsigned int i = 0, size = (unsigned int)m_cpuMeshes.size(); i < size; ++i)
 	{
 		m_cpuMeshes[i].Bind(m_staticShader->GetAttribute("position"), m_staticShader->GetAttribute("normal"), m_staticShader->GetAttribute("texCoord"), -1, -1);
 		m_cpuMeshes[i].Draw();
@@ -107,7 +123,7 @@ void AnimatedMeshApp::Render(float aspectRatio)
 	}
 	m_diffuseTexture->UnSet(0);
 	m_staticShader->UnBind();
-	
+
 	// GPU Skinned Mesh
 	model = TransformToMatrix44(m_gpuAnimInfo.m_model);
 	m_skinnedShader->Bind();
@@ -115,10 +131,10 @@ void AnimatedMeshApp::Render(float aspectRatio)
 	Uniform<Matrix44>::Set(m_skinnedShader->GetUniform("view"), view);
 	Uniform<Matrix44>::Set(m_skinnedShader->GetUniform("projection"), projection);
 	Uniform<Vector3>::Set(m_skinnedShader->GetUniform("light"), Vector3(1, 1, 1));
-	
-	Uniform<Matrix44>::Set(m_skinnedShader->GetUniform("pose"), m_gpuAnimInfo.m_posePalette);
-	Uniform<Matrix44>::Set(m_skinnedShader->GetUniform("invBindPose"), m_skeleton.GetInvBindPose());
-	
+
+	Uniform<Matrix44>::Set(m_skinnedShader->GetUniform("animated"), m_gpuAnimInfo.m_posePalette);
+	//Uniform<Matrix44>::Set(m_skinnedShader->GetUniform("invBindPose"), m_skeleton.GetInvBindPose());
+
 	m_diffuseTexture->Set(m_skinnedShader->GetUniform("tex0"), 0);
 	for (unsigned int i = 0, size = (unsigned int)m_gpuMeshes.size(); i < size; ++i) {
 		m_gpuMeshes[i].Bind(m_skinnedShader->GetAttribute("position"), m_skinnedShader->GetAttribute("normal"), m_skinnedShader->GetAttribute("texCoord"), m_skinnedShader->GetAttribute("weights"), m_skinnedShader->GetAttribute("joints"));
@@ -129,7 +145,7 @@ void AnimatedMeshApp::Render(float aspectRatio)
 	m_skinnedShader->UnBind();
 }
 
-void AnimatedMeshApp::Shutdown()
+void OptimisationApp::Shutdown()
 {
 	Instrumentor::Get().EndSession();
 }

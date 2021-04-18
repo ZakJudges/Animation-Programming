@@ -84,51 +84,51 @@ std::vector<unsigned int>& SkinnedMesh::GetIndices()
     return m_indices;
 }
 
-void SkinnedMesh::CPUSkinTransform(Skeleton& skeleton, Pose& pose)
-{
-    unsigned int vertexCount = m_positions.size();
-    if (vertexCount == 0)
-    {
-        return;
-    }
-
-    m_skinnedPositions.resize(vertexCount);
-    m_skinnedNormals.resize(vertexCount);
-    Pose& bindPose = skeleton.GetBindPose();
-
-    for (int i = 0; i < vertexCount; ++i)
-    {
-        //  Each vertex is influenced by 4 joints.
-        Vector4I& joint = m_influences[i];
-        Vector4F& weight = m_weights[i];
-
-        //  Skin space transform for the first joint influencing the current vertex.
-        Transform skin0 = Combine(pose[joint.x], Inverse(bindPose[joint.x]));
-        //  Now need to transform the vertex to get the new position and normal.
-        Vector3 p0 = TransformPoint(skin0, m_positions[i]);
-        Vector3 n0 = TransformVector(skin0, m_normals[i]);
-
-        //  Repeat for the other joints that might influence the vertex:
-        Transform skin1 = Combine(pose[joint.y], Inverse(bindPose[joint.y]));
-        Vector3 p1 = TransformPoint(skin1, m_positions[i]);
-        Vector3 n1 = TransformVector(skin1, m_normals[i]);
-
-        Transform skin2 = Combine(pose[joint.z], Inverse(bindPose[joint.z]));
-        Vector3 p2 = TransformPoint(skin2, m_positions[i]);
-        Vector3 n2 = TransformVector(skin2, m_normals[i]);
-
-        Transform skin3 = Combine(pose[joint.w], Inverse(bindPose[joint.w]));
-        Vector3 p3 = TransformPoint(skin3, m_positions[i]);
-        Vector3 n3 = TransformVector(skin3, m_normals[i]);
-
-        //  Combine the positions and normals into one vertex based on the weights.
-        m_skinnedPositions[i] = p0 * weight.x + p1 * weight.y + p2 * weight.z + p3 * weight.w;
-        m_skinnedNormals[i] = n0 * weight.x + n1 * weight.y + n2 * weight.x + n3 * weight.w;
-    }
-
-    m_posAttrib->Set(m_skinnedPositions);
-    m_normAttrib->Set(m_skinnedNormals);
-}
+//void SkinnedMesh::CPUSkinTransform(Skeleton& skeleton, Pose& pose)
+//{
+//    unsigned int vertexCount = m_positions.size();
+//    if (vertexCount == 0)
+//    {
+//        return;
+//    }
+//
+//    m_skinnedPositions.resize(vertexCount);
+//    m_skinnedNormals.resize(vertexCount);
+//    Pose& bindPose = skeleton.GetBindPose();
+//
+//    for (int i = 0; i < vertexCount; ++i)
+//    {
+//        //  Each vertex is influenced by 4 joints.
+//        Vector4I& joint = m_influences[i];
+//        Vector4F& weight = m_weights[i];
+//
+//        //  Skin space transform for the first joint influencing the current vertex.
+//        Transform skin0 = Combine(pose[joint.x], Inverse(bindPose[joint.x]));
+//        //  Now need to transform the vertex to get the new position and normal.
+//        Vector3 p0 = TransformPoint(skin0, m_positions[i]);
+//        Vector3 n0 = TransformVector(skin0, m_normals[i]);
+//
+//        //  Repeat for the other joints that might influence the vertex:
+//        Transform skin1 = Combine(pose[joint.y], Inverse(bindPose[joint.y]));
+//        Vector3 p1 = TransformPoint(skin1, m_positions[i]);
+//        Vector3 n1 = TransformVector(skin1, m_normals[i]);
+//
+//        Transform skin2 = Combine(pose[joint.z], Inverse(bindPose[joint.z]));
+//        Vector3 p2 = TransformPoint(skin2, m_positions[i]);
+//        Vector3 n2 = TransformVector(skin2, m_normals[i]);
+//
+//        Transform skin3 = Combine(pose[joint.w], Inverse(bindPose[joint.w]));
+//        Vector3 p3 = TransformPoint(skin3, m_positions[i]);
+//        Vector3 n3 = TransformVector(skin3, m_normals[i]);
+//
+//        //  Combine the positions and normals into one vertex based on the weights.
+//        m_skinnedPositions[i] = p0 * weight.x + p1 * weight.y + p2 * weight.z + p3 * weight.w;
+//        m_skinnedNormals[i] = n0 * weight.x + n1 * weight.y + n2 * weight.x + n3 * weight.w;
+//    }
+//
+//    m_posAttrib->Set(m_skinnedPositions);
+//    m_normAttrib->Set(m_skinnedNormals);
+//}
 
 void SkinnedMesh::CPUSkinMatrix(Skeleton& skeleton, Pose& pose)
 {
@@ -161,6 +161,50 @@ void SkinnedMesh::CPUSkinMatrix(Skeleton& skeleton, Pose& pose)
         m_skinnedNormals[i] = TransformVector(skinMatrix, m_normals[i]);
     }
 
+    m_posAttrib->Set(m_skinnedPositions);
+    m_normAttrib->Set(m_skinnedNormals);
+}
+
+void SkinnedMesh::CPUSkin(std::vector<Matrix44>& animatedPose)
+{
+    unsigned int vertCount = m_positions.size();
+    if (vertCount == 0)
+    {
+        //  Mesh has no vertices.
+        return;
+    }
+
+    //  Ensure that the skinned vectors are large enough to hold all the vertex data.
+    //  TODO: investigate performance implication of this.
+    m_skinnedPositions.resize(vertCount);
+    m_skinnedNormals.resize(vertCount);
+
+    for (unsigned int i = 0; i < vertCount; ++i)
+    {
+        //  The four joints that have an influence on this vertex.
+        Vector4I& joint = m_influences[i];
+        //  The weighting that each influencer has on this vertex.
+        Vector4F& weight = m_weights[i];
+
+        //  Transform the position by each of the influencing joint transforms.
+        Vector3 p0 = TransformPoint(animatedPose[joint.x], m_positions[i]);
+        Vector3 p1 = TransformPoint(animatedPose[joint.y], m_positions[i]);
+        Vector3 p2 = TransformPoint(animatedPose[joint.z], m_positions[i]);
+        Vector3 p3 = TransformPoint(animatedPose[joint.w], m_positions[i]);
+        //  Average the transformed positions according to weights.
+        m_skinnedPositions[i] = p0 * weight.x + p1 * weight.y + p2 * weight.z + p3 * weight.w;
+
+        //  Transform the normal by each of the influencing joint transforms.
+        Vector3 n0 = TransformVector(animatedPose[joint.x], m_normals[i]);
+        Vector3 n1 = TransformVector(animatedPose[joint.y], m_normals[i]);
+        Vector3 n2 = TransformVector(animatedPose[joint.z], m_normals[i]);
+        Vector3 n3 = TransformVector(animatedPose[joint.w], m_normals[i]);
+        //  Average the transformed normals according to weights.
+        m_skinnedNormals[i] = n0 * weight.x + n1 * weight.y + n2 * weight.z + n3 * weight.w;
+
+    }
+
+    //  Upload the skinned vertex positions and normals to the pos and norm attributes.
     m_posAttrib->Set(m_skinnedPositions);
     m_normAttrib->Set(m_skinnedNormals);
 }
