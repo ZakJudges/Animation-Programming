@@ -1,39 +1,48 @@
 #include "TransformTrack.h"
 #include "Timer.h"
 
+typedef TTransformTrack<VectorTrack, QuaternionTrack>;
+typedef TTransformTrack<VectorFastTrack, QuaternionFastTrack>;
 
-TransformTrack::TransformTrack()
+template <typename VTRACK, typename QTRACK>
+TTransformTrack<VTRACK, QTRACK>::TTransformTrack()
 {
     m_bone = 0;
 }
 
-unsigned int TransformTrack::GetBone()
+template <typename VTRACK, typename QTRACK>
+unsigned int TTransformTrack<VTRACK, QTRACK>::GetBone()
 {
     return m_bone;
 }
 
-void TransformTrack::SetBone(unsigned int bone)
+template <typename VTRACK, typename QTRACK>
+void TTransformTrack<VTRACK, QTRACK>::SetBone(unsigned int bone)
 {
     m_bone = bone;
 }
 
-VectorTrack& TransformTrack::GetPositionTrack()
+template <typename VTRACK, typename QTRACK>
+VTRACK& TTransformTrack<VTRACK, QTRACK>::GetPositionTrack()
 {
     return m_position;
 }
 
-QuaternionTrack& TransformTrack::GetRotationTrack()
+template <typename VTRACK, typename QTRACK>
+QTRACK& TTransformTrack<VTRACK, QTRACK>::GetRotationTrack()
 {
     return m_rotation;
 }
 
-VectorTrack& TransformTrack::GetScaleTrack()
+template <typename VTRACK, typename QTRACK>
+VTRACK& TTransformTrack<VTRACK, QTRACK>::GetScaleTrack()
 {
     return m_scale;
 }
 
 //  Get the lowest value of t from the tracks.
-float TransformTrack::GetStartTime()
+template <typename VTRACK, typename QTRACK>
+float TTransformTrack<VTRACK, QTRACK>::GetStartTime()
 {
     float result = 0.0f;
     bool isSet = false;
@@ -66,7 +75,8 @@ float TransformTrack::GetStartTime()
 }
 
 //  Get the highest value of t from the tracks.
-float TransformTrack::GetEndTime()
+template <typename VTRACK, typename QTRACK>
+float TTransformTrack<VTRACK, QTRACK>::GetEndTime()
 {
     float result = 0.0f;
     bool isSet = false;
@@ -98,13 +108,15 @@ float TransformTrack::GetEndTime()
     return result;
 }
 
-bool TransformTrack::IsValid()
+template <typename VTRACK, typename QTRACK>
+bool TTransformTrack<VTRACK, QTRACK>::IsValid()
 {
     //  Tracks are valid if they contain at least two frames.
     return m_position.GetSize() > 1 || m_rotation.GetSize() > 1 || m_scale.GetSize() > 1;
 }
 
-Transform TransformTrack::Sample(const Transform& ref, float time, bool isLooping)
+template <typename VTRACK, typename QTRACK>
+Transform TTransformTrack<VTRACK, QTRACK>::Sample(const Transform& ref, float time, bool isLooping)
 {
    PROFILE_FUNCTION();
 
@@ -124,6 +136,20 @@ Transform TransformTrack::Sample(const Transform& ref, float time, bool isLoopin
     {
         result.scale = m_scale.Sample(time, isLooping);
     }
+
+    return result;
+}
+
+//  Copies track data by value, so is slow.
+//      Use at load time only.
+FastTransformTrack OptimiseTransformTrack(TransformTrack& input)
+{
+    FastTransformTrack result;
+
+    result.SetBone(input.GetBone());
+    result.GetPositionTrack() = OptimiseTrack<Vector3, 3>(input.GetPositionTrack());
+    result.GetRotationTrack() = OptimiseTrack<Quaternion, 4>(input.GetRotationTrack());
+    result.GetScaleTrack() = OptimiseTrack<Vector3, 3>(input.GetScaleTrack());
 
     return result;
 }

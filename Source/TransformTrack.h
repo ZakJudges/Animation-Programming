@@ -4,15 +4,16 @@
 #include "Track.h"
 #include "Transform.h"
 
-class TransformTrack
+template <typename VTRACK, typename QTRACK>
+class TTransformTrack
 {
 public:
-	TransformTrack();
+	TTransformTrack();
 	unsigned int GetBone();
 	void SetBone(unsigned int bone);
-	VectorTrack& GetPositionTrack();
-	QuaternionTrack& GetRotationTrack();
-	VectorTrack& GetScaleTrack();
+	VTRACK& GetPositionTrack();
+	QTRACK& GetRotationTrack();
+	VTRACK& GetScaleTrack();
 	float GetStartTime();
 	float GetEndTime();
 	bool IsValid();		
@@ -20,9 +21,14 @@ public:
 
 protected:
 	unsigned int m_bone;
-	VectorTrack m_position;
-	QuaternionTrack m_rotation;
-	VectorTrack m_scale;
+	VTRACK m_position;
+	QTRACK m_rotation;
+	VTRACK m_scale;
 };
+
+typedef TTransformTrack<VectorTrack, QuaternionTrack> TransformTrack;
+typedef TTransformTrack<VectorFastTrack, QuaternionFastTrack> FastTransformTrack;
+
+FastTransformTrack OptimiseTransformTrack(TransformTrack& input);
 
 #endif
