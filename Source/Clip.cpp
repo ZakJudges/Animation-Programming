@@ -1,11 +1,6 @@
 #include "Clip.h"
 #include "Timer.h"
-
-template TClip<TransformTrack>;
-template TClip<FastTransformTrack>;
-
-template <typename TRACK>
-TClip<TRACK>::TClip()
+Clip::Clip()
 {
     m_name = "no_name_given";
     m_startTime = 0.0f;
@@ -13,26 +8,22 @@ TClip<TRACK>::TClip()
     m_looping = true;
 }
 
-template <typename TRACK>
-unsigned int TClip<TRACK>::GetBoneAtIndex(unsigned int index)
+unsigned int Clip::GetBoneAtIndex(unsigned int index)
 {
     return m_tracks[index].GetBone();
 }
 
-template <typename TRACK>
-void TClip<TRACK>::SetBoneAtIndex(unsigned int index, unsigned int bone)
+void Clip::SetBoneAtIndex(unsigned int index, unsigned int bone)
 {
     m_tracks[index].SetBone(bone);
 }
 
-template <typename TRACK>
-unsigned int TClip<TRACK>::GetSize()
+unsigned int Clip::GetSize()
 {
     return m_tracks.size();
 }
 
-template <typename TRACK>
-float TClip<TRACK>::Sample(Pose& output, float time)
+float Clip::Sample(Pose& output, float time)
 {
     PROFILE_FUNCTION();
 
@@ -57,8 +48,7 @@ float TClip<TRACK>::Sample(Pose& output, float time)
 
 //  Retrieve the TransformTrack object for a specific joint in the clip.
 //  Linear search for the specified joint.
-template <typename TRACK>
-TRACK& TClip<TRACK>::operator[](unsigned int bone)
+TransformTrack& Clip::operator[](unsigned int bone)
 {
     for (int i = 0, s = m_tracks.size(); i < s; ++i)
     {
@@ -74,8 +64,7 @@ TRACK& TClip<TRACK>::operator[](unsigned int bone)
     return m_tracks[m_tracks.size() - 1];
 }
 
-template <typename TRACK>
-void TClip<TRACK>::RecalculateDuration()
+void Clip::RecalculateDuration()
 {
     m_startTime = 0.0f;
     m_endTime = 0.0f;
@@ -105,50 +94,42 @@ void TClip<TRACK>::RecalculateDuration()
     }
 }
 
-template <typename TRACK>
-std::string& TClip<TRACK>::GetName()
+std::string& Clip::GetName()
 {
     return m_name;
 }
 
-template <typename TRACK>
-void TClip<TRACK>::SetName(const std::string& name)
+void Clip::SetName(const std::string& name)
 {
     m_name = name;
 }
 
-template <typename TRACK>
-float TClip<TRACK>::GetDuration()
+float Clip::GetDuration()
 {
     return m_endTime - m_startTime;
 }
 
-template <typename TRACK>
-float TClip<TRACK>::GetStartTime()
+float Clip::GetStartTime()
 {
     return m_startTime;
 }
 
-template <typename TRACK>
-float TClip<TRACK>::GetEndTime()
+float Clip::GetEndTime()
 {
     return m_endTime;
 }
 
-template <typename TRACK>
-bool TClip<TRACK>::GetLooping()
+bool Clip::GetLooping()
 {
     return m_looping;
 }
 
-template <typename TRACK>
-void TClip<TRACK>::SetLooping(bool isLooping)
+void Clip::SetLooping(bool isLooping)
 {
     m_looping = isLooping;
 }
 
-template <typename TRACK>
-float TClip<TRACK>::FitTimeToClip(float time)
+float Clip::FitTimeToClip(float time)
 {
 
     if (m_looping)
@@ -180,19 +161,4 @@ float TClip<TRACK>::FitTimeToClip(float time)
     }
 
     return time;
-}
-
-//  Copy Clip values into a FastClip object. Use at initialisation as its slow.
-FastClip OptimiseClip(Clip& input)
-{
-    FastClip result;
-    result.SetName(input.GetName());
-    result.SetLooping(input.GetLooping());
-    unsigned int size = input.GetSize();
-
-    for (unsigned int i = 0; i < size; ++i)
-    {
-        unsigned int joint = input.GetBoneAtIndex(i);
-        result[joint] = OptimiseTransformTrack(input[joint]);
-    }
 }

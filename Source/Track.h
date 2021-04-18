@@ -62,6 +62,5 @@ typedef FastTrack<float, 1> ScalarFastTrack;
 typedef FastTrack<Vector3, 3> VectorFastTrack;
 typedef FastTrack<Quaternion, 4> QuaternionFastTrack;
 
-template <typename T, int N>
-FastTrack<T, N> OptimiseTrack(Track<T, N>& track)
+
 #endif
