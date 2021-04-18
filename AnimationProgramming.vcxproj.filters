@@ -153,6 +153,9 @@
     <ClInclude Include="Source\Instrumentor.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Source\OptimisationApp.h">
+      <Filter>Header Files\Application</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Attribute.cpp">
@@ -239,6 +242,9 @@
     <ClCompile Include="Source\Instrumentor.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Source\OptimisationApp.cpp">
+      <Filter>Source Files\Application</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Shaders\lit.frag">
@@ -248,6 +254,9 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="Source\Shaders\skinned.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Source\Shaders\preskinned.vert">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
