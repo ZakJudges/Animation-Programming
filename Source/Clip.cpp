@@ -8,6 +8,14 @@ Clip::Clip()
     m_looping = true;
 }
 
+void Clip::SampleUsingLookupTable(bool lookupTable)
+{
+    for (int i = 0 ; i < m_tracks.size() ; ++i)
+    {
+        m_tracks[i].SampleUsingLookupTable(lookupTable);
+    }
+}
+
 unsigned int Clip::GetBoneAtIndex(unsigned int index)
 {
     return m_tracks[index].GetBone();

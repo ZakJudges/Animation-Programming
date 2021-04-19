@@ -8,6 +8,7 @@ class TransformTrack
 {
 public:
 	TransformTrack();
+	void SampleUsingLookupTable(bool lookupTable);
 	unsigned int GetBone();
 	void SetBone(unsigned int bone);
 	VectorTrack& GetPositionTrack();

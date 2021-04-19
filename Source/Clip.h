@@ -12,6 +12,7 @@ class Clip
 {
 public:
 	Clip();
+	void SampleUsingLookupTable(bool useLookup);
 	unsigned int GetBoneAtIndex(unsigned int index);
 	void SetBoneAtIndex(unsigned int index, unsigned int bone);
 	unsigned int GetSize(); 

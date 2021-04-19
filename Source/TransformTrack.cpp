@@ -7,6 +7,13 @@ TransformTrack::TransformTrack()
     m_bone = 0;
 }
 
+void TransformTrack::SampleUsingLookupTable(bool lookupTable)
+{
+    m_position.UseLookupTable(lookupTable);
+    m_rotation.UseLookupTable(lookupTable);
+    m_scale.UseLookupTable(lookupTable);
+}
+
 unsigned int TransformTrack::GetBone()
 {
     return m_bone;

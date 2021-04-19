@@ -14,6 +14,8 @@ class Track
 {
 public:
 	Track();
+	Track(unsigned int sampleFrequency, Interpolation type);
+	void UseLookupTable(bool useLookup);
 	void Resize(unsigned int size);
 	unsigned int GetSize();
 	Interpolation GetInterpolationType();
@@ -33,7 +35,8 @@ protected:
 protected:
 	std::vector<Frame<N>> m_frames;
 	Interpolation m_interpolationType;
-
+	std::vector<unsigned int> m_lookupTable;
+	unsigned int m_lookupFrequency;
 
 };
 

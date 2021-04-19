@@ -1,6 +1,7 @@
 #include "Track.h"
 #include "TrackUtils.h"
 #include <iostream>
+#include "Timer.h"
 
 
 template Track<float, 1>;
@@ -15,6 +16,14 @@ Track<T, N>::Track()
 {
 	//	Linear interpolation by default.
 	m_interpolationType = Interpolation::LINEAR;
+	m_lookupFrequency = 60;
+}
+
+template<typename T, int N>
+Track<T, N>::Track(unsigned int sampleFrequency, Interpolation type)
+{
+	m_interpolationType = type;
+	m_lookupFrequency = sampleFrequency;
 }
 
 template<typename T, int N>
@@ -56,6 +65,8 @@ float Track<T, N>::GetEndTime()
 template<typename T, int N>
 T Track<T, N>::Sample(float time, bool isLooping)
 {
+	PROFILE_FUNCTION();
+
 	if (m_interpolationType == Interpolation::CUBIC)
 	{
 		return SampleCubic(time, isLooping);
@@ -203,29 +214,48 @@ int Track<T, N>::GetFrameIndex(float time, bool isLooping)
 	}
 	else
 	{
+		//	Not looping, if time lies outside the duration of the clip then return the first or last frame index.
 		if (time < m_frames[0].m_time)
 		{
 			return 0;
 		}
 		if (time > m_frames[size - 2].m_time)
 		{
+			//	When sampling, there must always be a frame to the right, so return the second to last frame index.
 			return (int)size - 2;
 		}
 	}
 
-	//	Loop throught the frames in this track to find the frame nearest to the time.
-	//		frame time will always <= time.
-	for (int i = (int)size - 1; i >= 0; --i)
+	//	Sampling without using a lookup table. Perform linear search for the correct frame.
+	//		Should be used for short animation clips.
+	if (m_lookupTable.empty())
 	{
-		//	TODO: Time this and compare to binary search.
-		if (time >= m_frames[i].m_time)
+		//	Loop throught the frames in this track to find the frame nearest to the time.
+		//		frame time will always <= time.
+		for (int i = (int)size - 1; i >= 0; --i)
 		{
-			return i;
+			//	TODO: Time this and compare to binary search.
+			if (time >= m_frames[i].m_time)
+			{
+				return i;
+			}
 		}
 	}
 
-	//	Invalid frame index.
-	return -1;
+	//	Using Lookup table. Calculate the correct frame index, based on the current time.
+	//		Should be used for longer animation clips.
+	
+	//	There are duration * m_lookupFrequency elements in the lookup table. So multiplying the current time by the frequency
+	//		, then keeping the integer portion results in the index needed.
+	unsigned int index = (unsigned int)(time * m_lookupFrequency);
+
+	if (index >= m_lookupTable.size())
+	{
+		std::cout << "Error: Invalid frame index.\n";
+		return -1;
+	}
+
+	return (int)m_lookupTable[index];
 }
 
 template<typename T, int N>
@@ -269,6 +299,57 @@ float Track<T, N>::FitTimeToTrack(float time, bool isLooping)
 
 	return time;
 }
+
+template<typename T, int N>
+void Track<T, N>::UseLookupTable(bool useLookup)
+{
+	//	Sample the track at set intervals, and store
+	if (useLookup)
+	{
+		int frameCount = (int)m_frames.size();
+		if (frameCount <= 1)
+		{
+			//	Need at least two frames to sample an animation.
+			return;
+		}
+	
+		//	samples needed = samples per second * total seconds.
+		float duration = GetEndTime() - GetStartTime();
+		unsigned int sampleCount = duration * m_lookupFrequency;
+		m_lookupTable.resize(sampleCount);
+
+		for (unsigned int i = 0; i < sampleCount; ++i)
+		{
+			//	Find how far through the clip we are sampling [0,1].
+			float t = (float)i / (float)(sampleCount - 1);
+			//	Find the time which fits the track duration, proportional to t.
+			float time = t * duration + GetStartTime();
+	
+			unsigned int frameIndex = 0;
+			for (int j = frameCount - 1; j >= 0; --j)
+			{
+				//	Find the frame nearest to the desired time (on the left).
+				if (time >= this->m_frames[j].m_time)
+				{
+					frameIndex = j;
+					if ((int)frameIndex >= frameCount - 2)
+					{
+						frameIndex = frameCount - 2;
+					}
+					break;
+				}
+			}
+	
+			m_lookupTable[i] = frameIndex;
+		}
+
+		return;
+	}
+
+	//	No longer using lookup table, so clear the samled frame index vector.
+	m_lookupTable.clear();
+}
+
 
 template<> float Track<float, 1>::Cast(float* values)
 {

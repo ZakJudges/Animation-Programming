@@ -16,7 +16,7 @@ OptimisationApp::~OptimisationApp()
 
 void OptimisationApp::Init()
 {
-	Instrumentor::Get().BeginSession("Rendering", "PreGenSkinGPU.json");
+	Instrumentor::Get().BeginSession("Rendering", "NoLookup.json");
 
 
 	cgltf_data* gltf = LoadGLTFFile("Assets/Woman.gltf");
@@ -24,6 +24,11 @@ void OptimisationApp::Init()
 
 	m_skeleton = LoadSkeleton(gltf);
 	m_clips = LoadAnimationClips(gltf);
+	for (int i = 0; i < m_clips.size(); ++i)
+	{
+		//m_clips[i].SampleUsingLookupTable(true);
+	}
+
 	FreeGLTFFile(gltf);
 
 	m_gpuMeshes = m_cpuMeshes;
