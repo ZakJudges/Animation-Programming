@@ -103,17 +103,42 @@ Transform Pose::operator[](unsigned int index)
 //  TODO: Make more efficient (currently recalculating joints multiple times).
 void Pose::GetMatrixPalette(std::vector<Matrix44>& out)
 {
-  //  PROFILE_FUNCTION();
+    PROFILE_FUNCTION();
+
     unsigned int size = GetSize();
     if (out.size() != size)
     {
         out.resize(size);
     }
 
-    for (unsigned int i = 0; i < size; ++i)
+    //for (unsigned int i = 0; i < size; ++i)
+    //{
+    //    Transform transform = GetGlobalTransform(i);
+    //    out[i] = TransformToMatrix44(transform);
+    //}
+    int i = 0;
+    for (; i < size; ++i)
     {
-        Transform transform = GetGlobalTransform(i);
-        out[i] = TransformToMatrix44(transform);
+        int parent = m_parents[i];
+        if (parent > i)
+        {
+            //  Transforms are not in the same 'chain', so will need to recalculate the global transforms.  
+            break;
+        }
+        Matrix44 joint = TransformToMatrix44(m_joints[i]);
+        if (parent >= 0)
+        {
+            //  Since parent index is lower than i, the global transform of the parent joint has already been caluclated.
+            //  Calculate the global transform of this joint, using the result from the last step of i.
+            joint = out[parent] * joint;
+        }
+        out[i] = joint;
+    }
+
+    for (; i < size; ++i)
+    {
+        Transform t = GetGlobalTransform(i);
+        out[i] = TransformToMatrix44(t);
     }
 }
 

@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="Source\AnimatedMeshApp.h" />
     <ClInclude Include="Source\AnimationApp.h" />
+    <ClInclude Include="Source\AnimUtils.h" />
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\Attribute.h" />
     <ClInclude Include="Source\cgltf.h" />
@@ -58,6 +59,7 @@
   <ItemGroup>
     <ClCompile Include="Source\AnimatedMeshApp.cpp" />
     <ClCompile Include="Source\AnimationApp.cpp" />
+    <ClCompile Include="Source\AnimUtils.cpp" />
     <ClCompile Include="Source\Attribute.cpp" />
     <ClCompile Include="Source\cgltf.c" />
     <ClCompile Include="Source\Clip.cpp" />

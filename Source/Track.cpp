@@ -65,7 +65,7 @@ float Track<T, N>::GetEndTime()
 template<typename T, int N>
 T Track<T, N>::Sample(float time, bool isLooping)
 {
-	PROFILE_FUNCTION();
+	//PROFILE_FUNCTION();
 
 	if (m_interpolationType == Interpolation::CUBIC)
 	{

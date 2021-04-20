@@ -33,7 +33,7 @@ unsigned int Clip::GetSize()
 
 float Clip::Sample(Pose& output, float time)
 {
-    PROFILE_FUNCTION();
+    //PROFILE_FUNCTION();
 
     if (GetDuration() == 0.0f)
     {

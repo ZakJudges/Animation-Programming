@@ -16,7 +16,7 @@ OptimisationApp::~OptimisationApp()
 
 void OptimisationApp::Init()
 {
-	Instrumentor::Get().BeginSession("Rendering", "NoLookup.json");
+	Instrumentor::Get().BeginSession("Rendering", "GetMatrixPalette.json");
 
 
 	cgltf_data* gltf = LoadGLTFFile("Assets/Woman.gltf");
@@ -26,7 +26,7 @@ void OptimisationApp::Init()
 	m_clips = LoadAnimationClips(gltf);
 	for (int i = 0; i < m_clips.size(); ++i)
 	{
-		//m_clips[i].SampleUsingLookupTable(true);
+		m_clips[i].SampleUsingLookupTable(true);
 	}
 
 	FreeGLTFFile(gltf);
@@ -62,7 +62,7 @@ void OptimisationApp::Init()
 
 void OptimisationApp::Update(float deltaTime)
 {
-	PROFILE_FUNCTION();
+	//PROFILE_FUNCTION();
 
 	////	CPU SkinnedMesh:
 	////	Sample the clip to set the pose from the specified time.
@@ -100,7 +100,7 @@ void OptimisationApp::Update(float deltaTime)
 
 void OptimisationApp::Render(float aspectRatio)
 {
-	PROFILE_FUNCTION();
+	//PROFILE_FUNCTION();
 
 	glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);

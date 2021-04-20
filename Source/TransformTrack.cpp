@@ -113,7 +113,7 @@ bool TransformTrack::IsValid()
 
 Transform TransformTrack::Sample(const Transform& ref, float time, bool isLooping)
 {
-   PROFILE_FUNCTION();
+  // PROFILE_FUNCTION();
 
     Transform result = ref;
 

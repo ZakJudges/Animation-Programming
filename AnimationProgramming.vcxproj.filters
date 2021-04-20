@@ -156,6 +156,9 @@
     <ClInclude Include="Source\OptimisationApp.h">
       <Filter>Header Files\Application</Filter>
     </ClInclude>
+    <ClInclude Include="Source\AnimUtils.h">
+      <Filter>Header Files\Animation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Attribute.cpp">
@@ -244,6 +247,9 @@
     </ClCompile>
     <ClCompile Include="Source\OptimisationApp.cpp">
       <Filter>Source Files\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AnimUtils.cpp">
+      <Filter>Source Files\Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
