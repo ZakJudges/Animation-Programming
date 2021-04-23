@@ -24,6 +24,7 @@
     <ClInclude Include="Source\AnimUtils.h" />
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\Attribute.h" />
+    <ClInclude Include="Source\BlendController.h" />
     <ClInclude Include="Source\cgltf.h" />
     <ClInclude Include="Source\Clip.h" />
     <ClInclude Include="Source\DebugLines.h" />
@@ -61,6 +62,7 @@
     <ClCompile Include="Source\AnimationApp.cpp" />
     <ClCompile Include="Source\AnimUtils.cpp" />
     <ClCompile Include="Source\Attribute.cpp" />
+    <ClCompile Include="Source\BlendController.cpp" />
     <ClCompile Include="Source\cgltf.c" />
     <ClCompile Include="Source\Clip.cpp" />
     <ClCompile Include="Source\DebugLines.cpp" />
