@@ -107,10 +107,10 @@ void CrossFadeController::Update(float dt)
 
 Pose& CrossFadeController::GetCurrentPose()
 {
-    // TODO: insert return statement here
+    return m_pose;
 }
 
 Clip* CrossFadeController::GetCurrentClip()
 {
-    return nullptr;
+    return m_clip;
 }

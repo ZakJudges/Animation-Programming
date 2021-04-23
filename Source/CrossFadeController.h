@@ -19,6 +19,7 @@ struct CrossFadeTarget
 };
 
 //	Fast blending from one animation to another.
+//	Automatically handles fading to new animations when they start playing.
 class CrossFadeController
 {
 public:
