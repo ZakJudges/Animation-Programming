@@ -31,6 +31,7 @@ void BlendController::Blend(Pose& pose, Pose& a, Pose& b, float t, int blendRoot
 	unsigned int numJoints = pose.GetSize();
 	for (unsigned int i = 0; i < numJoints; ++i)
 	{
+		//	Skip hierarchy check when the blend root is negative, since the full pose will be blended.
 		if (blendRoot >= 0)
 		{
 			if (!IsInHierarchy(pose, blendRoot, i))
