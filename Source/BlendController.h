@@ -10,6 +10,8 @@ class BlendController
 public:
 	static bool IsInHierarchy(Pose& pose, unsigned int parent, unsigned int search);
 	static void Blend(Pose& output, Pose& a, Pose& b, float t, int blendRoot);
+	Pose MakeAdditivePose(Skeleton& skeleton, Clip& clip);
+	void Add(Pose& output, Pose& inPose, Pose& addPose, Pose& additiveBasePose, int blendRoot);
 
 private:
 	BlendController();
