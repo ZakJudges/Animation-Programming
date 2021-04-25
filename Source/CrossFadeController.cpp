@@ -85,7 +85,7 @@ void CrossFadeController::Update(float dt)
         }
     }
 
-    numTargets - m_targets.size();
+    numTargets = m_targets.size();
     m_pose = m_skeleton.GetRestPose();
     m_time = m_clip->Sample(m_pose, m_time + dt);
 

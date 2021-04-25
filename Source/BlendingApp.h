@@ -10,7 +10,7 @@
 #include "Texture.h"
 #include "SkinnedMesh.h"
 #include <vector>
-
+#include "CrossFadeController.h"
 
 struct AnimationInstance
 {
@@ -38,6 +38,10 @@ protected:
 	Pose m_pose;
 	std::vector<Matrix44> m_posePalette;
 	std::vector<Matrix44> m_skinPalette;
+	CrossFadeController m_crossFadeController;
+	float m_fadeTime;
+	unsigned int m_currentClip;
+
 
 	AnimationInstance m_a;
 	AnimationInstance m_b;
