@@ -12,7 +12,8 @@
 #include "AnimationApp.h"
 #include "SkeletonApp.h"
 //#include "AnimatedMeshApp.h"
-#include "OptimisationApp.h"
+//#include "OptimisationApp.h"
+#include "BlendingApp.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, PSTR, int);
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -47,7 +48,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
 	//gApplication = new AnimationApp();
 	//gApplication = new SkeletonApp();
 	//gApplication = new AnimatedMeshApp();
-	gApplication = new OptimisationApp();
+	//gApplication = new OptimisationApp();
+	gApplication = new BlendingApp();
 
 	WNDCLASSEX wndclass;
 	wndclass.cbSize = sizeof(WNDCLASSEX);
