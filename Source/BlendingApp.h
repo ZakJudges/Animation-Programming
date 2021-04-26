@@ -47,6 +47,15 @@ protected:
 	AnimationInstance m_b;
 	float m_blendTime;
 	bool m_invertBlend;
+
+	Pose m_currentPose;
+	Pose m_addPose;
+	Pose m_additiveBasePose;
+	float m_playbackTime;
+	float m_additiveTime;
+	float m_additiveDirection;
+	unsigned int m_clip;
+	unsigned int m_additiveIndex;
 	
 };
 

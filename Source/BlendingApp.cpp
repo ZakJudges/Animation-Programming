@@ -24,16 +24,16 @@ void BlendingApp::Init()
 	m_meshes = LoadSkinnedMeshes(gltf);
 	FreeGLTFFile(gltf);
 
-	//	Initialise the animation data.
-	m_pose = m_skeleton.GetRestPose();
-	m_pose.GetMatrixPalette(m_posePalette);
+	////	Initialise the animation data.
+	//m_pose = m_skeleton.GetRestPose();
+	//m_pose.GetMatrixPalette(m_posePalette);
 	m_skinPalette = m_skeleton.GetInvBindPose();
-	m_a.m_pose = m_pose;
-	m_a.m_clip = 0;
-	m_b.m_clip = 1;
-	m_b.m_pose = m_pose;
-	m_blendTime = 0.0f;
-	m_invertBlend = false;
+	//m_a.m_pose = m_pose;
+	//m_a.m_clip = 0;
+	//m_b.m_clip = 1;
+	//m_b.m_pose = m_pose;
+	//m_blendTime = 0.0f;
+	//m_invertBlend = false;
 	/*for (int i = 0, size = m_clips.size(); i < size; ++i)
 	{
 		if (m_clips[i].GetName() == "Walking")
@@ -53,13 +53,37 @@ void BlendingApp::Init()
 	m_shader = new Shader("Source/Shaders/skinned.vert", "Source/Shaders/lit.frag");
 	m_texture = new Texture("Assets/Woman.png");
 
-	m_crossFadeController.SetSkeleton(m_skeleton);
+	/*m_crossFadeController.SetSkeleton(m_skeleton);
 	m_crossFadeController.Play(&m_clips[0]);
 	m_crossFadeController.Update(0.0f);
-	m_crossFadeController.GetCurrentPose().GetMatrixPalette(m_posePalette);
+	m_crossFadeController.GetCurrentPose().GetMatrixPalette(m_posePalette);*/
 
-	m_currentClip = 0;
-	m_fadeTime = 0.0f;
+	//m_currentClip = 0;
+	//m_fadeTime = 0.0f;
+
+	m_additiveTime = 0.0f;
+	m_additiveDirection = 1.0f;
+	m_clip = 0;
+	m_additiveIndex = 0;
+	for (int i = 0, size = m_clips.size(); i < size; ++i)
+	{
+		if (m_clips[i].GetName() == "Lean_Left")
+		{
+			m_additiveIndex = i;
+		}
+		if (m_clips[i].GetName() == "Walking")
+		{
+			m_clip = i;
+		}
+	}
+
+	m_additiveBasePose = BlendController::MakeAdditivePose(m_skeleton, m_clips[m_additiveIndex]);
+	m_clips[m_additiveIndex].SetLooping(false);
+	m_currentPose = m_skeleton.GetRestPose();
+	m_addPose = m_skeleton.GetRestPose();
+	m_playbackTime = 0.0f;
+
+
 
 }
 
@@ -95,23 +119,53 @@ void BlendingApp::Update(float deltaTime)
 	//	m_pose = m_skeleton.GetRestPose();
 	//}
 
-	m_crossFadeController.Update(deltaTime);
 
-	m_fadeTime -= deltaTime;
-	if (m_fadeTime < 0.0f)
+
+	//m_crossFadeController.Update(deltaTime);
+
+	//m_fadeTime -= deltaTime;
+	//if (m_fadeTime < 0.0f)
+	//{
+	//	m_fadeTime = 3.0f;
+	//	//unsigned int clip = m_currentClip;
+	//	//	Pick a new clip to fade to.
+	//	//while (clip == m_currentClip)
+	//	//{
+	//	//	clip = rand() % m_clips.size();
+	//	//}
+	//	//m_currentClip = clip;
+	//	unsigned int clip = m_currentClip;
+	//	clip += 1;
+	//	if (clip >= m_clips.size() - 1)
+	//	{
+	//		clip = 0;
+	//	}
+	//	m_currentClip = clip;
+	//	m_crossFadeController.FadeTo(&m_clips[clip], 0.5f);
+	//}
+
+	//m_crossFadeController.GetCurrentPose().GetMatrixPalette(m_posePalette);
+
+	m_additiveTime += deltaTime * m_additiveDirection;
+	 
+	if (m_additiveTime < 0.0f)
 	{
-		m_fadeTime = 3.0f;
-		unsigned int clip = m_currentClip;
-		//	Pick a new clip to fade to.
-		while (clip == m_currentClip)
-		{
-			clip = rand() % m_clips.size();
-		}
-		m_currentClip = clip;
-		m_crossFadeController.FadeTo(&m_clips[clip], 0.5f);
+		m_additiveTime = 0.0f;
+		m_additiveDirection *= -1.0f;
 	}
 
-	m_crossFadeController.GetCurrentPose().GetMatrixPalette(m_posePalette);
+	if (m_additiveTime > 1.0f)
+	{
+		m_additiveTime = 1.0f;
+		m_additiveDirection *= -1.0f;
+	}
+
+	m_playbackTime = m_clips[m_clip].Sample(m_currentPose, m_playbackTime + deltaTime);
+	float time = m_clips[m_additiveIndex].GetStartTime() + (m_clips[m_additiveIndex].GetDuration() * m_additiveTime);
+	m_clips[m_additiveIndex].Sample(m_addPose, time);
+	BlendController::Add(m_currentPose, m_currentPose, m_addPose, m_additiveBasePose, -1);
+
+	m_currentPose.GetMatrixPalette(m_posePalette);
 }
 
 void BlendingApp::Render(float aspectRatio)
