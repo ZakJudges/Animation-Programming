@@ -49,6 +49,12 @@
     <Filter Include="Source Files\Utils">
       <UniqueIdentifier>{7ce10df7-036e-496b-ad06-af7deb5992b5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Animation\IK">
+      <UniqueIdentifier>{40be3b98-c0f6-4dd4-86f0-579931dd88fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Animation\IK">
+      <UniqueIdentifier>{6dce175a-b802-4a1e-b214-3c02175d0ff4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Attribute.h">
@@ -168,6 +174,9 @@
     <ClInclude Include="Source\BlendingApp.h">
       <Filter>Header Files\Application</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CCDSolver.h">
+      <Filter>Header Files\Animation\IK</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Attribute.cpp">
@@ -268,6 +277,9 @@
     </ClCompile>
     <ClCompile Include="Source\BlendingApp.cpp">
       <Filter>Source Files\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CCDSolver.cpp">
+      <Filter>Source Files\Animation\IK</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

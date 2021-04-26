@@ -26,6 +26,7 @@
     <ClInclude Include="Source\Attribute.h" />
     <ClInclude Include="Source\BlendController.h" />
     <ClInclude Include="Source\BlendingApp.h" />
+    <ClInclude Include="Source\CCDSolver.h" />
     <ClInclude Include="Source\cgltf.h" />
     <ClInclude Include="Source\Clip.h" />
     <ClInclude Include="Source\CrossFadeController.h" />
@@ -66,6 +67,7 @@
     <ClCompile Include="Source\Attribute.cpp" />
     <ClCompile Include="Source\BlendController.cpp" />
     <ClCompile Include="Source\BlendingApp.cpp" />
+    <ClCompile Include="Source\CCDSolver.cpp" />
     <ClCompile Include="Source\cgltf.c" />
     <ClCompile Include="Source\Clip.cpp" />
     <ClCompile Include="Source\CrossFadeController.cpp" />
