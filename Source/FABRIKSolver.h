@@ -18,13 +18,13 @@ public:
 	Transform GetLocalTransform(unsigned int index);
 	void SetLocalTransform(unsigned int index, const Transform& transform);
 	Transform GetGlobalTransform(unsigned int index);
-	bool Solve(const Transform& target);
-private:
+	virtual bool Solve(const Transform& target);
+protected:
 	void IKChainToWorld();
 	void IterateForward(const Vector3& base);
 	void IterateBackward(const Vector3& goal);
 	void WorldToIKChain();
-private:
+protected:
 	std::vector<Transform> m_chain;
 	std::vector<Vector3> m_worldChain;
 	std::vector<float> m_lengths;

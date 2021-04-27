@@ -17,8 +17,8 @@ public:
 	void SetStepCount(unsigned int stepCount);
 	float GetThreshold();
 	void SetThreshold(float value);
-	bool Solve(const Transform& target);
-private:
+	virtual bool Solve(const Transform& target);
+protected:
 	std::vector<Transform> m_chain;
 	unsigned int m_stepCount;
 	float m_threshold;
