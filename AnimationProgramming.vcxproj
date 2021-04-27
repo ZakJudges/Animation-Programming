@@ -32,6 +32,7 @@
     <ClInclude Include="Source\CrossFadeController.h" />
     <ClInclude Include="Source\DebugLines.h" />
     <ClInclude Include="Source\Draw.h" />
+    <ClInclude Include="Source\FABRIKSolver.h" />
     <ClInclude Include="Source\Frame.h" />
     <ClInclude Include="Source\glad.h" />
     <ClInclude Include="Source\GLTFLoader.h" />
@@ -73,6 +74,7 @@
     <ClCompile Include="Source\CrossFadeController.cpp" />
     <ClCompile Include="Source\DebugLines.cpp" />
     <ClCompile Include="Source\Draw.cpp" />
+    <ClCompile Include="Source\FABRIKSolver.cpp" />
     <ClCompile Include="Source\glad.c" />
     <ClCompile Include="Source\GLTFLoader.cpp" />
     <ClCompile Include="Source\IndexBuffer.cpp" />

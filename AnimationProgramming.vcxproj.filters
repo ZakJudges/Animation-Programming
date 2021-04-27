@@ -177,6 +177,9 @@
     <ClInclude Include="Source\CCDSolver.h">
       <Filter>Header Files\Animation\IK</Filter>
     </ClInclude>
+    <ClInclude Include="Source\FABRIKSolver.h">
+      <Filter>Header Files\Animation\IK</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Attribute.cpp">
@@ -279,6 +282,9 @@
       <Filter>Source Files\Application</Filter>
     </ClCompile>
     <ClCompile Include="Source\CCDSolver.cpp">
+      <Filter>Source Files\Animation\IK</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FABRIKSolver.cpp">
       <Filter>Source Files\Animation\IK</Filter>
     </ClCompile>
   </ItemGroup>
